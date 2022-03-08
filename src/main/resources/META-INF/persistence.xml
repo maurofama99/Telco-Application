@@ -3,7 +3,10 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default">
+    <persistence-unit name="TelcoApplicationEJB"
+                      transaction-type="JTA">
+        <jta-data-source>TeachingAgendaDB</jta-data-source>
+        <class>it.polimi.db2.db2project.entities.Employee</class>
 
     </persistence-unit>
 </persistence>
