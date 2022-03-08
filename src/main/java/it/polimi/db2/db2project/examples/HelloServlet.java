@@ -1,4 +1,4 @@
-package it.polimi.db2.db2project;//Replace with your own configuration
+package it.polimi.db2.db2project.examples;//Replace with your own configuration
 
 import java.io.*;
 import java.sql.DriverManager;

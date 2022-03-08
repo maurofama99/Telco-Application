@@ -1,4 +1,4 @@
-package it.polimi.db2.db2project;
+package it.polimi.db2.db2project.examples;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
