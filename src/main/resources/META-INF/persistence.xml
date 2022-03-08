@@ -6,7 +6,7 @@
     <persistence-unit name="TelcoApplicationEJB"
                       transaction-type="JTA">
         <jta-data-source>TeachingAgendaDB</jta-data-source>
-        <class>it.polimi.db2.db2project.entities.Employee</class>
+        <class>it.polimi.db2.db2project.ejbmodule.entities.Employee</class>
 
     </persistence-unit>
 </persistence>

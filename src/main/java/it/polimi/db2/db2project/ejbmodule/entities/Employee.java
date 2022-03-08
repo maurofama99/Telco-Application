@@ -1,4 +1,4 @@
-package it.polimi.db2.db2project.entities;
+package it.polimi.db2.db2project.ejbmodule.entities;
 
 import jakarta.persistence.*;
 
