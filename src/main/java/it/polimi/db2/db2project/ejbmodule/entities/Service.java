@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "service", schema = "db2_project_schema")
 public class Service implements Serializable {
 
     @Id

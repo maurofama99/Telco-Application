@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Table(name = "optionalproduct", schema = "db2_project_schema")
 public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -15,7 +16,7 @@ public class OptionalProduct implements Serializable {
     private int fee;
 
     @ManyToMany
-    @JoinTable (name = "orderoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionald"), inverseJoinColumns = @JoinColumn(name = "orderid"))
+    @JoinTable (name = "orderoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "orderid"))
     private List<CustomerOrder> orders;
 
     public Long getId() {

@@ -1,21 +1,41 @@
 package it.polimi.db2.db2project.ejbmodule.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
+@Table(name = "telcopackage", schema = "db2_project_schema")
 public class TelcoPackage implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "package")
+    private List<CustomerOrder> orders;
+
+    @ManyToMany(mappedBy = "optionalinorder")
+    private List<OptionalProduct> optionalProducts;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "package")
+    private List<ValidityPeriod> validityPeriods;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "package")
+    private List<Service> services;
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
