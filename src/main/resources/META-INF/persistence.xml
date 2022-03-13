@@ -7,6 +7,12 @@
                       transaction-type="JTA">
         <jta-data-source>TeachingAgendaDB</jta-data-source>
         <class>it.polimi.db2.db2project.ejbmodule.entities.Employee</class>
-
+        <class>it.polimi.db2.db2project.ejbmodule.entities.Alert</class>
+        <class>it.polimi.db2.db2project.ejbmodule.entities.CustomerOrder</class>
+        <class>it.polimi.db2.db2project.ejbmodule.entities.OptionalProduct</class>
+        <class>it.polimi.db2.db2project.ejbmodule.entities.Service</class>
+        <class>it.polimi.db2.db2project.ejbmodule.entities.TelcoPackage</class>
+        <class>it.polimi.db2.db2project.ejbmodule.entities.User</class>
+        <class>it.polimi.db2.db2project.ejbmodule.entities.ValidityPeriod</class>
     </persistence-unit>
 </persistence>

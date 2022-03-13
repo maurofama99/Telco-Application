@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "customerorder", schema = "db2_project_schema")
 public class CustomerOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +24,7 @@ public class CustomerOrder implements Serializable {
     private User user;
 
     @ManyToOne
-    @JoinColumn (name = "telcopackageid")
+    @JoinColumn (name = "packageID")
     private TelcoPackage telcoPackage;
 
     @ManyToOne
@@ -35,5 +36,69 @@ public class CustomerOrder implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public boolean isOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(boolean orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public TelcoPackage getTelcoPackage() {
+        return telcoPackage;
+    }
+
+    public void setTelcoPackage(TelcoPackage telcoPackage) {
+        this.telcoPackage = telcoPackage;
+    }
+
+    public ValidityPeriod getValidityPeriod() {
+        return validityPeriod;
+    }
+
+    public void setValidityPeriod(ValidityPeriod validityPeriod) {
+        this.validityPeriod = validityPeriod;
+    }
+
+    public List<OptionalProduct> getOptionalProducts() {
+        return optionalProducts;
+    }
+
+    public void setOptionalProducts(List<OptionalProduct> optionalProducts) {
+        this.optionalProducts = optionalProducts;
     }
 }
