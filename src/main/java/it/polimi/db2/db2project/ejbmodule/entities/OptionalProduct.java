@@ -23,3 +23,7 @@ public class OptionalProduct implements Serializable {
         return id;
     }
 }
+
+// ogni volta che un utente non paga, subito dopo vengono contati i suoi ordini in stato suspended, se sono tre viene creato un alert
+
+// ogni volta che un utente non paga, il suo insolvent counter incrementa, quando insolvent = 3, controlli se già non esiste un alert di questo user, in caso crei alert
