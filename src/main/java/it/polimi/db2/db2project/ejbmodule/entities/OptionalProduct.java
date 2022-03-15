@@ -19,6 +19,10 @@ public class OptionalProduct implements Serializable {
     @JoinTable (name = "orderoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "orderid"))
     private List<CustomerOrder> orders;
 
+    @ManyToMany
+    @JoinTable (name = "packageoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "packageid"))
+    private List<CustomerOrder> packages;
+
     public Long getId() {
         return id;
     }

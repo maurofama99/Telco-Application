@@ -15,16 +15,16 @@ public class TelcoPackage implements Serializable {
     private Long id;
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "package")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<CustomerOrder> orders;
 
-    @ManyToMany(mappedBy = "optionalinorder")
+    @ManyToMany(mappedBy = "packages")
     private List<OptionalProduct> optionalProducts;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "package")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<ValidityPeriod> validityPeriods;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "package")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<Service> services;
 
     public Long getId() {

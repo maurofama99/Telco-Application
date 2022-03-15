@@ -24,14 +24,19 @@ public class CustomerOrder implements Serializable {
     private User user;
 
     @ManyToOne
-    @JoinColumn (name = "packageID")
+    @JoinColumn (name = "packageID", referencedColumnName="id")
     private TelcoPackage telcoPackage;
 
+//    @ManyToOne
+//    @JoinColumns (name = "duration")
     @ManyToOne
-    @JoinColumn (name = "duration")
+    @JoinColumns({
+        @JoinColumn(name="duration", referencedColumnName="duration"),
+        @JoinColumn(name="packageID", referencedColumnName="packageID")
+    })
     private ValidityPeriod validityPeriod;
 
-    @ManyToMany (mappedBy = "optionalinorder")
+    @ManyToMany (mappedBy = "orders")
     private List<OptionalProduct> optionalProducts;
 
     public Long getId() {
