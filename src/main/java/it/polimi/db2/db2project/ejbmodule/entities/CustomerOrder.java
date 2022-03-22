@@ -1,7 +1,6 @@
 package it.polimi.db2.db2project.ejbmodule.entities;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
