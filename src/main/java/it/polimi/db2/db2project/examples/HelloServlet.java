@@ -3,8 +3,8 @@ package it.polimi.db2.db2project.examples;
 import java.io.*;
 import java.sql.DriverManager;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
