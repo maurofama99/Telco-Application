@@ -13,13 +13,19 @@ public class UserService {
     @PersistenceContext(unitName = "TelcoApplicationEJB")
     private EntityManager em;
 
+    /**
+     * Check if user credentials are correct and returns the corresponding User object if true
+     * @return User
+     * @throws WrongCredentialsException if could not verify credentials
+     * @throws NonUniqueResultException if more than one user registered with same credentials
+     */
     public User checkCredentials(String username, String password) throws WrongCredentialsException, NonUniqueResultException {
         List<User> users = null;
         try {
             users = em.createNamedQuery("User.checkCredentials", User.class).setParameter(1, username).setParameter(2, password)
                     .getResultList();
         } catch (PersistenceException e) {
-            throw new WrongCredentialsException("Could not verify credentals");
+            throw new WrongCredentialsException("Could not verify credentials");
         }
         if (users.isEmpty())
             return null;
