@@ -14,5 +14,14 @@
   <input type="submit" value="login">
   <p th:text=" ${errorMsg}"></p>
 </form>
+
+
+<form action="/db2_project_war_exploded/registration" method="POST">
+  Username: <input type="text" name="username" required> <br>
+  Password: <input type="password" name="pwd" required><br>
+  Mail: <input type="mail" name="mail" required><br>
+  <input type="submit" value="register">
+  <p th:text=" ${msg}"></p>
+</form>
 </body>
 </html>

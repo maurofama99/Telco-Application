@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "user", schema = "db2_project_schema")
 @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.name = ?1 and r.password = ?2")
+@NamedQuery(name = "User.checkSameUser", query = "SELECT r FROM User r  WHERE r.name = ?1")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 

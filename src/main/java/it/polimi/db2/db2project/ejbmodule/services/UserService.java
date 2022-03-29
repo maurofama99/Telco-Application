@@ -32,7 +32,26 @@ public class UserService {
         else if (users.size() == 1)
             return users.get(0);
         throw new NonUniqueResultException("More than one user registered with same credentials");
+    }
 
+    public boolean checkSameUser(String username) throws WrongCredentialsException {
+        List<User> users = null;
+        try {
+            users = em.createNamedQuery("User.checkSameUser", User.class).setParameter(1, username)
+                    .getResultList();
+        } catch (PersistenceException e) {
+            throw new WrongCredentialsException("Could not verify credentials");
+        }
+
+        return users.isEmpty();
+    }
+
+    public void registerUser(String username, String password, String mail){
+        User newUser = new User();
+        newUser.setName(username);
+        newUser.setEmail(mail);
+        newUser.setPassword(password);
+        em.persist(newUser);
     }
 
 }
