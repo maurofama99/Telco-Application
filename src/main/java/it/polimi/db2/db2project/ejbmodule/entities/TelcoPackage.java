@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "telcopackage", schema = "db2_project_schema")
+@NamedQuery(name = "TelcoPackage.getPackages", query = "SELECT r FROM TelcoPackage r")
 public class TelcoPackage implements Serializable {
     private static final long serialVersionUID = 1L;
 

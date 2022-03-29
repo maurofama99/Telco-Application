@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Home</title>
+</head>
+
+<body>
+<div align="right">
+    <p th:text="${'user: ' + session.user2}"></p>
+</div>
+<h1>Welcome to the TELCO APPLICATION Home Page</h1>
+
+
+    <th:block th:each="tp : ${telcopackage}">
+        <br>
+        <td th:text="${'Package Name:' + tp.getName()}"></td>
+    </th:block>
+
+</body>
+</html>
