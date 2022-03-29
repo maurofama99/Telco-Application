@@ -26,13 +26,9 @@ public class CustomerOrder implements Serializable {
     @JoinColumn (name = "packageID", referencedColumnName="id")
     private TelcoPackage telcoPackage;
 
-//    @ManyToOne
-//    @JoinColumns (name = "duration")
+
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name="duration", referencedColumnName="duration"),
-        @JoinColumn(name="packageID", referencedColumnName="packageID")
-    })
+    @JoinColumn(name="validityperiodID", referencedColumnName="id")
     private ValidityPeriod validityPeriod;
 
     @ManyToMany (mappedBy = "orders")
