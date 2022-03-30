@@ -22,8 +22,15 @@
         </form>
     </div>
 </div>
-<h1>Welcome to the TELCO APPLICATION Home Page</h1>
+<div style="text-align:left;">
+    <h1>Welcome to the TELCO APPLICATION Home Page</h1>
+</div>
 
+<div>
+    <form action="/db2_project_war_exploded/buypackage" method="POST">
+        <input type="submit" value="Buy Package">
+    </form>
+</div>
 
     <th:block th:each="tp : ${telcopackage}">
         <br>
