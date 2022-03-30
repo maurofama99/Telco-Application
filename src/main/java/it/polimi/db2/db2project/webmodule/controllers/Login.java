@@ -71,7 +71,7 @@ public class Login extends HttpServlet {
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             request.getSession().setAttribute("user", user);
-            path = getServletContext().getContextPath() + "/hello-servlet";
+            path = getServletContext().getContextPath() + "/home";
             response.sendRedirect(path);
         }
 

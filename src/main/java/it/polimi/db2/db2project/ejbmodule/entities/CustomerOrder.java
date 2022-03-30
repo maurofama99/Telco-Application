@@ -31,7 +31,7 @@ public class CustomerOrder implements Serializable {
     @JoinColumn(name="validityperiodID", referencedColumnName="id")
     private ValidityPeriod validityPeriod;
 
-    @ManyToMany (mappedBy = "orders")
+    @ManyToMany (mappedBy = "orders", fetch = FetchType.EAGER)
     private List<OptionalProduct> optionalProducts;
 
     public Long getId() {
