@@ -25,8 +25,10 @@ public class TelcoPackage implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<ValidityPeriod> validityPeriods;
 
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<Service> services;
+
 
     public Long getId() {
         return id;
@@ -38,5 +40,9 @@ public class TelcoPackage implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Service> getServices() {
+        return services;
     }
 }

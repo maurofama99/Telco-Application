@@ -9,12 +9,37 @@
 <div align="right">
     <p th:text="${'user: ' + session.user2}"></p>
 </div>
+<div align="right">
+    <div th:if="${session.user2.equals('Anonymous')}">
+        <form action="/db2_project_war_exploded" method="POST">
+            <input type="submit" value="login">
+        </form>
+    </div>
+    <!-- ELSE -->
+    <div th:unless="${session.user2.equals('Anonymous')}">
+        <form action="/db2_project_war_exploded" method="POST">
+            <input type="submit" value="go back">
+        </form>
+    </div>
+</div>
 <h1>Welcome to the TELCO APPLICATION Home Page</h1>
 
 
     <th:block th:each="tp : ${telcopackage}">
         <br>
-        <td th:text="${'Package Name:' + tp.getName()}"></td>
+        <h3 th:text="${'Package Name: ' + tp.getName()}"></h3>
+        <h5>Services: </h5>
+        <th:block th:each="se : ${tp.getServices()}">
+            <td th:text="${'type: ' + se.getType()}"></td>
+            <td th:if="${se.getNMin()!=0}" th:text="${'Nmin: ' + se.getNMin()}"></td>
+            <td th:if="${se.getNSMS()!=0}" th:text="${'Nsms: ' + se.getNSMS()}"></td>
+            <td th:if="${se.getExtraMinFee()!=0}" th:text="${'ExtraMinFee: ' + se.getExtraMinFee()}"></td>
+            <td th:if="${se.getExtraSMSFee()!=0}" th:text="${'ExtraSmsFee: ' + se.getExtraSMSFee()}"></td>
+            <td th:if="${se.getNGiga()!=0}" th:text="${'Ngiga: ' + se.getNGiga()}"></td>
+            <td th:if="${se.getExtraGigaFee()!=0}" th:text="${'ExtraGIgaFee: ' + se.getExtraGigaFee()}"></td>
+            <br>
+        </th:block>
+        <br>
     </th:block>
 
 </body>
