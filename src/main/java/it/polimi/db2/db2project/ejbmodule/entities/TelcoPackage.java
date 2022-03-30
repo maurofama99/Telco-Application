@@ -19,8 +19,9 @@ public class TelcoPackage implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<CustomerOrder> orders;
 
-    @ManyToMany(mappedBy = "packages")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "packages")
     private List<OptionalProduct> optionalProducts;
+
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<ValidityPeriod> validityPeriods;
@@ -45,4 +46,13 @@ public class TelcoPackage implements Serializable {
     public List<Service> getServices() {
         return services;
     }
+
+    public List<ValidityPeriod> getValidityPeriods() {
+        return validityPeriods;
+    }
+
+    public List<OptionalProduct> getOptionalProducts() {
+        return optionalProducts;
+    }
+
 }

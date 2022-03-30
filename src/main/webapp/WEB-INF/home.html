@@ -6,10 +6,10 @@
 </head>
 
 <body>
-<div align="right">
+<div style="text-align:right;">
     <p th:text="${'user: ' + session.user2}"></p>
 </div>
-<div align="right">
+<div style="text-align:right;">
     <div th:if="${session.user2.equals('Anonymous')}">
         <form action="/db2_project_war_exploded" method="POST">
             <input type="submit" value="login">
@@ -28,7 +28,7 @@
     <th:block th:each="tp : ${telcopackage}">
         <br>
         <h3 th:text="${'Package Name: ' + tp.getName()}"></h3>
-        <h5>Services: </h5>
+        <h4>Services: </h4>
         <th:block th:each="se : ${tp.getServices()}">
             <td th:text="${'type: ' + se.getType()}"></td>
             <td th:if="${se.getNMin()!=0}" th:text="${'Nmin: ' + se.getNMin()}"></td>
@@ -40,6 +40,20 @@
             <br>
         </th:block>
         <br>
+        <h4>Validity Periods: </h4>
+        <th:block th:each="vp : ${tp.getValidityPeriods()}">
+            <td th:text="${'Duration: ' + vp.getDuration()}"></td>
+            <td th:text="${'Fee: ' + vp.getPrice()}"></td>
+            <br>
+        </th:block>
+        <br>
+        <h4>Optional Products: </h4>
+        <th:block th:each="op : ${tp.getOptionalProducts()}">
+            <td th:text="${'Name: ' + op.getName()}"></td>
+            <td th:text="${'Fee: ' + op.getFee()}"></td>
+            <br>
+        </th:block>
+        <hr>
     </th:block>
 
 </body>

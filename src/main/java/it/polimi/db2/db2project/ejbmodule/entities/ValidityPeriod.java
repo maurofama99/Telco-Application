@@ -19,6 +19,7 @@ public class ValidityPeriod implements Serializable {
     @JoinColumn (name = "packageID",  referencedColumnName="ID")
     private TelcoPackage telcoPackage;
 
+
     private int price;
 
     public void setDuration(Long duration) {
@@ -27,5 +28,9 @@ public class ValidityPeriod implements Serializable {
 
     public Long getDuration() {
         return duration;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
