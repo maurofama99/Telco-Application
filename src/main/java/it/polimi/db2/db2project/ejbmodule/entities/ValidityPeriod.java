@@ -33,4 +33,8 @@ public class ValidityPeriod implements Serializable {
     public int getPrice() {
         return price;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

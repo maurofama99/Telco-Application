@@ -19,4 +19,9 @@ public class PackageService {
         telcoPackages = em.createNamedQuery("TelcoPackage.getPackages", TelcoPackage.class).getResultList();
         return telcoPackages;
     }
+
+    public TelcoPackage findPackageByID(Integer id){
+        TelcoPackage telcoPackage = em.find(TelcoPackage.class, id);
+        return telcoPackage;
+    }
 }

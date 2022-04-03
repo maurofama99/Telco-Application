@@ -26,14 +26,11 @@
     <h1>Welcome to the TELCO APPLICATION Home Page</h1>
 </div>
 
-<div>
-    <form action="/db2_project_war_exploded/buypackage" method="POST">
-        <input type="submit" value="Buy Package">
-    </form>
-</div>
-
     <th:block th:each="tp : ${telcopackage}">
         <br>
+        <form id="BuyPacakgeForm" th:action="@{/buypackage(packageid=${tp.id})}" method="POST">
+            <input type="submit" value="Buy Package">
+        </form>
         <h3 th:text="${'Package Name: ' + tp.getName()}"></h3>
         <h4>Services: </h4>
         <th:block th:each="se : ${tp.getServices()}">
