@@ -28,7 +28,7 @@
 <form action="/db2_project_war_exploded/confirmation" method="POST">
     <div class="form-group">
         <h4>Select Validity Period: </h4>
-        <select class="custom-select" required>
+        <select class="custom-select" required name="validity">
             <th:block th:each="vp : ${telcopackage.getValidityPeriods()}">
                 <option th:value="${vp.getId()}"><td th:text="${'Duration: ' + vp.getDuration() + ' Fee: ' + vp.getPrice()}"></td></option>
             </th:block>
@@ -39,8 +39,9 @@
         <h4>Select Optional Products: </h4>
         <div class="custom-control custom-checkbox">
             <th:block th:each="op : ${telcopackage.getOptionalProducts()}">
-                <input type="checkbox" class="custom-control-input" th:attr="id=${op.getId()}">
-                <label class="custom-control-label" th:attr="for=${op.getId()}"><td th:text="${'Name: ' + op.getName() + 'Fee: ' + op.getFee()}"></td></label>
+                <input type="checkbox" class="custom-control-input" th:value="${op.getId()}" th:id="${'check' + op.getId()}" name="optionals">
+                <label class="custom-control-label" th:for="${'check' + op.getId()}"><td th:text="${'Name: ' + op.getName() + 'Fee: ' + op.getFee()}"></td></label>
+                <br>
             </th:block>
         </div>
     </div>
