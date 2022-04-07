@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "optionalproduct", schema = "db2_project_schema")
+@NamedQuery(name = "OptionalProduct.getAllOptionalProducts", query = "SELECT r FROM OptionalProduct r")
 public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 

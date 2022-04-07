@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Application</title>
+</head>
+<body>
+<div style="text-align:right;">
+    <p th:text="${'user: ' + session.empname}"></p>
+</div>
+
+
+<h2>Create a service:</h2>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Fixed Phone</h3>
+    <input type="hidden" name="action" value="fixedphone">
+    <input type="submit" value="Create">
+</form>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Mobile Phone</h3>
+    Number of minutes: <input type="number" name="nmin" required> <br>
+    Number of SMS: <input type="number" name="nsms" required> <br>
+    Extra minutes fee: <input type="number" name="extraminfee" required> <br>
+    Extra sms fee: <input type="number" name="extrasmsfee" required> <br>
+    <input type="hidden" name="action" value="mobilephone">
+    <input type="submit" value="Create">
+</form>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Fixed Internet</h3>
+    Number of giga: <input type="number" name="ngiga" required> <br>
+    Extra giga fee: <input type="number" name="extragigafee" required> <br>
+    <input type="hidden" name="action" value="fixedinternet">
+    <input type="submit" value="Create">
+</form>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Mobile Internet</h3>
+    Number of giga: <input type="number" name="ngiga" required> <br>
+    Extra giga fee: <input type="number" name="extragigafee" required> <br>
+    <input type="hidden" name="action" value="mobileinternet">
+    <input type="submit" value="Create">
+</form>
+
+<h2>Services added to the package:</h2>
+<th:block th:each="s : ${session.services}">
+    <td th:text="${'Type: ' + s.getType() + ' NGiga: ' + s.getNGiga() + '  '}"></td>
+</th:block>
+
+</body>
+</html>

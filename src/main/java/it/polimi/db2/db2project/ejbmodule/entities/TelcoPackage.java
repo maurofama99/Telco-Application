@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "telcopackage", schema = "db2_project_schema")
+@SecondaryTable(name="customerorder", pkJoinColumns=@PrimaryKeyJoinColumn(name="ID"))
 @NamedQuery(name = "TelcoPackage.getPackages", query = "SELECT r FROM TelcoPackage r")
 public class TelcoPackage implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -16,16 +17,14 @@ public class TelcoPackage implements Serializable {
     private Long id;
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "telcoPackage")
     private List<CustomerOrder> orders;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "packages")
     private List<OptionalProduct> optionalProducts;
 
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "telcoPackage")
     private List<ValidityPeriod> validityPeriods;
-
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage")
     private List<Service> services;
@@ -47,9 +46,9 @@ public class TelcoPackage implements Serializable {
         return services;
     }
 
-    public List<ValidityPeriod> getValidityPeriods() {
-        return validityPeriods;
-    }
+//    public List<ValidityPeriod> getValidityPeriods() {
+//        return validityPeriods;
+//    }
 
     public List<OptionalProduct> getOptionalProducts() {
         return optionalProducts;
