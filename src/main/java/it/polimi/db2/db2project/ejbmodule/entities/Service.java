@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "service", schema = "db2_project_schema")
+@NamedQuery(name = "Service.getAllServices", query = "SELECT r FROM Service r")
 public class Service implements Serializable {
 
     @Id
@@ -13,7 +14,7 @@ public class Service implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn (name = "packageID",  referencedColumnName="id")
+    @JoinColumn (name = "packageID",  referencedColumnName="ID")
     private TelcoPackage telcoPackage;
 
     private String type;
@@ -28,8 +29,27 @@ public class Service implements Serializable {
     private int ExtraSMSFee;
     @Basic(optional=true)
     private int NGiga;
-    @Basic(optional=true)
+    @Basic(optional = true)
     private int ExtraGigaFee;
+
+    public Service() {
+        this.type = "fixedphone";
+    }
+
+    public Service(int NMin, int NSMS, int extraMinFee, int extraSMSFee) {
+        this.type = "mobilephone";
+        this.NMin = NMin;
+        this.NSMS = NSMS;
+        ExtraMinFee = extraMinFee;
+        ExtraSMSFee = extraSMSFee;
+    }
+
+    public Service(String type, int NGiga, int extraGigaFee) {
+        // todo check se la stringa è una tra "mobileinternet" e "fixedinternet"
+        this.type = type;
+        this.NGiga = NGiga;
+        ExtraGigaFee = extraGigaFee;
+    }
 
     public Long getId() {
         return id;

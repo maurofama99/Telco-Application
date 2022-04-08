@@ -13,20 +13,26 @@ public class ValidityPeriod implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long duration;
+    private int duration;
 
     @ManyToOne
     @JoinColumn (name = "packageID",  referencedColumnName="ID")
     private TelcoPackage telcoPackage;
 
-
     private int price;
 
-    public void setDuration(Long duration) {
+    public ValidityPeriod(int duration, int price) {
+        this.duration = duration;
+        this.price = price;
+    }
+
+    public ValidityPeriod() {}
+
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
-    public Long getDuration() {
+    public int getDuration() {
         return duration;
     }
 

@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "employee", schema = "db2_project_schema")
+@NamedQuery(name = "Employee.checkEmployeeCredentials", query = "SELECT r FROM Employee r  WHERE r.name = ?1 and r.password = ?2")
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -19,19 +19,18 @@ public class CustomerOrder implements Serializable {
     private int amount;
 
     @ManyToOne
-    @JoinColumn (name = "userid")
+    @JoinColumn (name = "userID", referencedColumnName = "ID")
     private User user;
 
     @ManyToOne
-    @JoinColumn (name = "packageID", referencedColumnName="id")
+    @JoinColumn (name = "packageID", referencedColumnName="ID")
     private TelcoPackage telcoPackage;
 
-
     @ManyToOne
-    @JoinColumn(name="validityperiodID", referencedColumnName="id")
+    @JoinColumn(name="validityperiodID", referencedColumnName="ID")
     private ValidityPeriod validityPeriod;
 
-    @ManyToMany (mappedBy = "orders", fetch = FetchType.EAGER)
+    @ManyToMany (mappedBy = "orders", fetch = FetchType.LAZY)
     private List<OptionalProduct> optionalProducts;
 
     public Long getId() {

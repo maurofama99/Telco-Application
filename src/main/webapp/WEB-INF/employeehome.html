@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Application</title>
+</head>
+<body>
+<div style="text-align:right;">
+    <p th:text="${'user: ' + session.empname}"></p>
+</div>
+
+<h2>Create a service:</h2>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Fixed Phone</h3>
+    <input type="hidden" name="action" value="fixedphone">
+    <input type="submit" value="Create">
+</form>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Mobile Phone</h3>
+    Number of minutes: <input type="number" name="nmin" required> <br>
+    Number of SMS: <input type="number" name="nsms" required> <br>
+    Extra minutes fee: <input type="number" name="extraminfee" required> <br>
+    Extra sms fee: <input type="number" name="extrasmsfee" required> <br>
+    <input type="hidden" name="action" value="mobilephone">
+    <input type="submit" value="Create">
+</form>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Fixed Internet</h3>
+    Number of giga: <input type="number" name="ngiga" required> <br>
+    Extra giga fee: <input type="number" name="extragigafee" required> <br>
+    <input type="hidden" name="action" value="fixedinternet">
+    <input type="submit" value="Create">
+</form>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Mobile Internet</h3>
+    Number of giga: <input type="number" name="ngiga" required> <br>
+    Extra giga fee: <input type="number" name="extragigafee" required> <br>
+    <input type="hidden" name="action" value="mobileinternet">
+    <input type="submit" value="Create">
+</form>
+
+<th:block th:each="s : ${session.services}">
+    <h3>Services added to the package:</h3>
+    <td th:text="${'Type: ' + s.getType()}"></td>
+</th:block>
+
+<h2>Create an optional product:</h2>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    Name: <input type="text" name="name" required> <br>
+    Fee: <input type="number" name="fee" required> <br>
+    <input type="hidden" name="action" value="createoptional">
+    <input type="submit" value="Create">
+</form>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    <h3>Select an optional product to add:</h3>
+    <th:block th:each="op : ${session.existingoptionals}">
+            <input type="checkbox" name="checkedexistingoptionals" class="custom-control-input" th:value="${op.getId()}" th:id="${'check' + op.getId()}">
+        <label class="custom-control-label" th:for="${'check' + op.getId()}">
+            <td th:text="${'Name: ' + op.getName() + ' Fee: ' + op.getFee()}"></td>
+        </label>
+        <br>
+    </th:block>
+    <input type="hidden" name="action" value="addexistingoptionals">
+    <input type="submit" value="Add">
+</form>
+
+
+<th:block th:each="op : ${session.optionals}">
+    <h3>Created optional products added to the package:</h3>
+    <td th:text="${'Name: ' + op.getName() + '   '}"></td>
+</th:block>
+
+<h2>Create validity periods:</h2>
+
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    Duration: <input type="number" name="duration" required> <br>
+    Price: <input type="number" name="price" required> <br>
+    <input type="hidden" name="action" value="createvp">
+    <input type="submit" value="Create">
+</form>
+
+<th:block th:each="vp : ${session.vperiods}">
+    <h3>Validity periods added to the package:</h3>
+    <td th:text="${'Duration: ' + vp.getDuration() + '   '}"></td>
+</th:block>
+
+<div style="text-align:right;">
+<form action="/db2_project_war_exploded/employeepage" method="POST">
+    Name: <input type="text" name="packagename" required> <br>
+    <input type="hidden" name="action" value="createpackage">
+    <input type="submit" value="Create Package"  style="height:50px; width:200px" />
+</form>
+</div>
+
+</body>
+</html>
