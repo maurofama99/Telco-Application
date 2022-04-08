@@ -63,38 +63,48 @@ public class Confirmation extends HttpServlet{
         TelcoPackage telcoPackage;
         telcoPackage = packageService.findPackageByID(packageID);
 
-        //retrieve selected optional products
-        List<OptionalProduct> optionals = new ArrayList<>();
-        if(request.getParameter("optionals") != null){
-            for(String optProd : request.getParameterValues("optionals")){
-                OptionalProduct optionalProduct = optionalService.findOptionalByID(Integer.parseInt(optProd));
-                optionals.add(optionalProduct);
+        if(session.getAttribute("confirmation").equals(false)){
+            //retrieve selected optional products
+            List<OptionalProduct> optionals = new ArrayList<>();
+            if (request.getParameter("optionals") != null) {
+                for (String optProd : request.getParameterValues("optionals")) {
+                    OptionalProduct optionalProduct = optionalService.findOptionalByID(Integer.parseInt(optProd));
+                    optionals.add(optionalProduct);
+                }
             }
+
+            //retrieve start date
+            LocalDate startDate = LocalDate.parse(request.getParameterValues("startDate")[0]);
+
+            //retrieve Validity Period
+            ValidityPeriod validityPeriod = validityService.findValidityByID(Integer.parseInt(request.getParameterValues("validity")[0]));
+
+
+            //save the order variables in the session
+            session.setAttribute("optionals", optionals);
+            session.setAttribute("startDate", startDate);
+            session.setAttribute("validityPeriod", validityPeriod);
+            session.setAttribute("confirmation", true);
+            session.setAttribute("telcoPackage", telcoPackage);
         }
-
-        //retrieve start date
-        LocalDate startDate = LocalDate.parse(request.getParameterValues("startDate")[0]);
-
-        //retrieve Validity Period
-        ValidityPeriod validityPeriod = validityService.findValidityByID(Integer.parseInt(request.getParameterValues("validity")[0]));
-
-
-        //save the order variables in the session
-        session.setAttribute("optionals", optionals);
-        session.setAttribute("startDate", startDate);
-        session.setAttribute("validityPeriod", validityPeriod);
+        if(session.getAttribute("user")!=null){
+            User user = (User) session.getAttribute("user");
+            session.setAttribute("user2", user.getName());
+        }
 
 
         String path = "/WEB-INF/confirmation.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("telcopackage", telcoPackage);
-        ctx.setVariable("optionals", optionals);
-        ctx.setVariable("validityPeriod", validityPeriod);
 
 
         templateEngine.process(path, ctx, response.getWriter());
+    }
 
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String path = getServletContext().getContextPath() + "/home";
+        resp.sendRedirect(path);
     }
 
     public void destroy() {

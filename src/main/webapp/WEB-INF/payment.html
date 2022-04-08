@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div th:if="${session.status}">
+        <h1>BOMBA HAI ACQUISTATO IL PACCHETO</h1>
+    </div>
+    <!-- ELSE -->
+    <div th:unless="${session.status}">
+        <h1>CHE SFIGA TI E' SALTATO IL PAGAMENTO</h1>
+    </div>
+</div>
+</body>
+</html>

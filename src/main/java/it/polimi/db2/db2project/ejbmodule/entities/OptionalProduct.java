@@ -3,6 +3,7 @@ package it.polimi.db2.db2project.ejbmodule.entities;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,11 +17,12 @@ public class OptionalProduct implements Serializable {
     private String name;
     private int fee;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable (name = "orderoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "orderID"))
+
+    @ManyToMany (mappedBy = "optionalProducts", fetch = FetchType.EAGER)
     private List<CustomerOrder> orders;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable (name = "packageoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "packageID"))
     private List<CustomerOrder> packages;
 
@@ -34,6 +36,13 @@ public class OptionalProduct implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public void addOrder(CustomerOrder customerOrder){
+        if(orders == null){
+            orders = new ArrayList<>();
+        }
+        this.orders.add(customerOrder);
     }
 
 }

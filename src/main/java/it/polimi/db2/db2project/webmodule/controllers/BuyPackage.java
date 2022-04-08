@@ -58,6 +58,7 @@ public class BuyPackage extends HttpServlet{
         }
 
         session.setAttribute("packageID", packageID);
+        session.setAttribute("confirmation", false);
 
         TelcoPackage telcoPackage;
         telcoPackage = packageService.findPackageByID(packageID);

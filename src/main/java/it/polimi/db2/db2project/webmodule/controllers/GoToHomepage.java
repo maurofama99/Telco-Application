@@ -57,6 +57,9 @@ public class GoToHomepage extends HttpServlet {
         List<TelcoPackage> telcoPackages = null;
         telcoPackages = packageService.getPackages();
 
+        //set to false a session parameter for later use
+        session.setAttribute("home", false);
+
         // Redirect to the Home page and add missions to the parameters
         String path = "/WEB-INF/home.html";
         ServletContext servletContext = getServletContext();

@@ -17,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.stream.Stream;
 
 @WebServlet(urlPatterns = "/login")
 public class Login extends HttpServlet {
@@ -70,9 +72,18 @@ public class Login extends HttpServlet {
             path = "/index.html";
             templateEngine.process(path, ctx, response.getWriter());
         } else {
-            request.getSession().setAttribute("user", user);
-            path = getServletContext().getContextPath() + "/home";
-            response.sendRedirect(path);
+            if(request.getSession().getAttribute("confirmation")!= null && request.getSession().getAttribute("confirmation").equals(true)){
+                request.getSession().setAttribute("user", user);
+                path = getServletContext().getContextPath() + "/confirmation";
+                response.sendRedirect(path);
+            }else {
+                request.getSession().setAttribute("user", user);
+                path = getServletContext().getContextPath() + "/home";
+                response.sendRedirect(path);
+                //devo cancellare i parametri della session se uno si rilogga
+                //HttpSession session = request.getSession();
+                //session.invalidate();
+            }
         }
 
     }
