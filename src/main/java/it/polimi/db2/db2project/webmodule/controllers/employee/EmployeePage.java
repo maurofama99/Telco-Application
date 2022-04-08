@@ -1,7 +1,6 @@
 package it.polimi.db2.db2project.webmodule.controllers.employee;
 
 import it.polimi.db2.db2project.ejbmodule.entities.*;
-import it.polimi.db2.db2project.ejbmodule.services.EmployeeService;
 import it.polimi.db2.db2project.ejbmodule.services.OptionalService;
 import it.polimi.db2.db2project.ejbmodule.services.PackageService;
 import it.polimi.db2.db2project.ejbmodule.services.ServiceService;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +51,8 @@ public class EmployeePage extends HttpServlet {
         } else {
             Employee user = (Employee) session.getAttribute("emp");
             session.setAttribute("empname", user.getName());
+            List<OptionalProduct> optionalProducts = optionalService.getAllOptionalProducts();
+            session.setAttribute("existingoptionals", optionalProducts);
             templateEngine.process("/WEB-INF/employeehome.html", ctx, response.getWriter());
         }
     }
@@ -64,17 +64,92 @@ public class EmployeePage extends HttpServlet {
         if (action == null) {
             templateEngine.process("/WEB-INF/employeehome.html", ctx, response.getWriter());
         } else {
-            if (action.equalsIgnoreCase("fixedphone")) {
-                doGetFixedPhone(request, response);
-            } else if (action.equalsIgnoreCase("mobilephone")) {
-                doGetMobilePhone(request, response);
-            } else if (action.equalsIgnoreCase("fixedinternet")) {
-                doGetFixedInternet(request, response);
-            } else if (action.equalsIgnoreCase("mobileinternet")) {
-                doGetMobileInternet(request, response);
-            } else throw new IllegalStateException("Problem with creating the service");
-
+            switch (action) {
+                case "fixedphone":
+                    doPostFixedPhone(request, response);
+                    break;
+                case "createpackage":
+                    doGetCreatePackage(request, response);
+                    break;
+                case "addexistingoptionals":
+                    doGetAddExistingOptionals(request, response);
+                    break;
+                case "mobilephone":
+                    doGetMobilePhone(request, response);
+                    break;
+                case "fixedinternet":
+                    doGetFixedInternet(request, response);
+                    break;
+                case "mobileinternet":
+                    doGetMobileInternet(request, response);
+                    break;
+                case "createoptional":
+                    doGetCreateOptional(request, response);
+                    break;
+                case "createvp":
+                    doGetCreateVp(request, response);
+                    break;
+                default:
+                    throw new IllegalStateException("Cannot find action keyword, check keyword correctness");
+            }
         }
+    }
+
+    private void doGetCreateVp(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("vperiods") == null) {
+            List<ValidityPeriod> vperiods = new ArrayList<ValidityPeriod>();
+            vperiods.add(new ValidityPeriod(Integer.parseInt(request.getParameter("duration")), Integer.parseInt(request.getParameter("price"))));
+            session.setAttribute("vperiods", vperiods);
+        } else {
+            List<ValidityPeriod> vperiods = (List<ValidityPeriod>) session.getAttribute("vperiods");
+            vperiods.add(new ValidityPeriod(Integer.parseInt(request.getParameter("duration")), Integer.parseInt(request.getParameter("price"))));
+            session.setAttribute("vperiods", vperiods);
+        }
+        response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
+    }
+
+    private void doGetAddExistingOptionals(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        String[] checkedoptionalsids = request.getParameterValues("checkedexistingoptionals"); // qui ho messo in checkedoptionalsids tutti gli id degli optionals esistenti selezionati
+        if (session.getAttribute("optionals") == null) {
+            List<OptionalProduct> optionals = new ArrayList<OptionalProduct>();
+            // caso in cui nessun optional è stato aggiunto alla sessione, devo prendere tutti gli optional corrispondenti agli id dal database e metterli nella sessione
+            for (String id: checkedoptionalsids) {
+                optionals.add(optionalService.findOptionalByID(Long.parseLong(id)));
+            }
+            session.setAttribute("optionals", optionals);
+        } else {
+            List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
+            for (String id: checkedoptionalsids) {
+                if (optionals.stream().noneMatch(o -> o.getId().equals(Long.parseLong(id)))){
+                    optionals.add(optionalService.findOptionalByID(Long.parseLong(id)));
+                }
+            }
+            session.setAttribute("optionals", optionals);
+        }
+        response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
+    }
+
+    private void doGetCreatePackage(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        packageService.createPackage(StringEscapeUtils.escapeJava(request.getParameter("packagename")),(List<Service>) session.getAttribute("services"), (List<OptionalProduct>) session.getAttribute("optionals"), (List<ValidityPeriod>) session.getAttribute("vperiods"));
+        // TODO azzera tutti gli attributi della session
+    }
+
+    private void doGetCreateOptional(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("optionals") == null) {
+            List<OptionalProduct> optionals = new ArrayList<OptionalProduct>();
+            optionals.add(new OptionalProduct(StringEscapeUtils.escapeJava(request.getParameter("name")), Integer.parseInt(request.getParameter("fee"))));
+            session.setAttribute("optionals", optionals);
+        } else {
+            List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
+            optionals.add(new OptionalProduct(StringEscapeUtils.escapeJava(request.getParameter("name")), Integer.parseInt(request.getParameter("fee"))));
+            session.setAttribute("optionals", optionals);
+        }
+        response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
+        // persist anche nel db
     }
 
     private void doGetMobileInternet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -119,7 +194,7 @@ public class EmployeePage extends HttpServlet {
         response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
     }
 
-    private void doGetFixedPhone(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostFixedPhone(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("services") == null) {
             List<Service> services = new ArrayList<Service>();

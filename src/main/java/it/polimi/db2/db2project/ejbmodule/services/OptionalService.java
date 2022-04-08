@@ -1,5 +1,6 @@
 package it.polimi.db2.db2project.ejbmodule.services;
 
+import it.polimi.db2.db2project.ejbmodule.entities.Employee;
 import it.polimi.db2.db2project.ejbmodule.entities.OptionalProduct;
 import it.polimi.db2.db2project.ejbmodule.entities.TelcoPackage;
 import it.polimi.db2.db2project.ejbmodule.entities.User;
@@ -15,9 +16,8 @@ public class OptionalService {
     @PersistenceContext(unitName = "TelcoApplicationEJB")
     private EntityManager em;
 
-    public OptionalProduct findOptionalByID(Integer id){
-        OptionalProduct optionalProduct = em.find(OptionalProduct.class, id);
-        return optionalProduct;
+    public OptionalProduct findOptionalByID(Long id){
+        return em.find(OptionalProduct.class, id);
     }
 
     public List<OptionalProduct> getAllOptionalProducts(){

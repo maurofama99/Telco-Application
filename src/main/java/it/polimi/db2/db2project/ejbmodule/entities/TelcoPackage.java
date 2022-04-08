@@ -54,4 +54,19 @@ public class TelcoPackage implements Serializable {
         return optionalProducts;
     }
 
+    public void setOrders(List<CustomerOrder> orders) {
+        this.orders = orders;
+    }
+
+    public void setOptionalProducts(List<OptionalProduct> optionalProducts) {
+        this.optionalProducts = optionalProducts;
+    }
+
+    public void setValidityPeriods(List<ValidityPeriod> validityPeriods) {
+        this.validityPeriods = validityPeriods;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
 }
