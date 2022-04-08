@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Confirmation Page</h1>
+<h2>Sum up of your order</h2>
+<div>
+    <h3 th:text="${'Package Name: '+ telcopackage.getName()}"></h3>
+</div>
+<h4>Services: </h4>
+<th:block th:each="se : ${telcopackage.getServices()}">
+    <td th:text="${'type: ' + se.getType()}"></td>
+    <td th:if="${se.getNMin()!=0}" th:text="${'Nmin: ' + se.getNMin()}"></td>
+    <td th:if="${se.getNSMS()!=0}" th:text="${'Nsms: ' + se.getNSMS()}"></td>
+    <td th:if="${se.getExtraMinFee()!=0}" th:text="${'ExtraMinFee: ' + se.getExtraMinFee()}"></td>
+    <td th:if="${se.getExtraSMSFee()!=0}" th:text="${'ExtraSmsFee: ' + se.getExtraSMSFee()}"></td>
+    <td th:if="${se.getNGiga()!=0}" th:text="${'Ngiga: ' + se.getNGiga()}"></td>
+    <td th:if="${se.getExtraGigaFee()!=0}" th:text="${'ExtraGIgaFee: ' + se.getExtraGigaFee()}"></td>
+    <br>
+</th:block>
+<br>
+<h4>Validity Period: </h4>
+<div>
+    <p th:text="${'Duration: ' + session.validityPeriod.getDuration() + ' Fee: ' + session.validityPeriod.getPrice()}"></p>
+</div>
+<br>
+<h4>Optionals: </h4>
+<th:block th:each="op : ${session.optionals}">
+    <td th:text="${'Name: ' + op.getName() + 'Fee: ' + op.getFee()}"></td>
+    <br>
+</th:block>
+<br>
+<h4>Start date: </h4>
+<div>
+    <p th:text="${session.startDate}"></p>
+</div>
+<div>
+    <div th:if="${session.user2.equals('Anonymous')}">
+        <form action="/db2_project_war_exploded/" method="POST">
+            <input type="submit" value="login">
+        </form>
+    </div>
+    <!-- ELSE -->
+    <div th:unless="${session.user2.equals('Anonymous')}">
+        <form action="/db2_project_war_exploded/payment" method="POST">
+            <input type="submit" value="BUY">
+        </form>
+    </div>
+</div>
+</body>
+</html>

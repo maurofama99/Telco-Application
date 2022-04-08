@@ -6,7 +6,6 @@
 </head>
 <body>
 <h1>Welcome to the Telco Application</h1>
-<h2>Inter merda version</h2>
 
 <form action="/db2_project_war_exploded/login" method="POST">
   Username: <input type="text" name="username" required> <br>
@@ -27,15 +26,5 @@
 <form action="/db2_project_war_exploded/home" method="POST">
   <input type="submit" value="skip">
 </form>
-
-
-<form action="/db2_project_war_exploded/employeelogin" method="POST">
-  <h2>Employee Area</h2>
-  Username: <input type="text" name="username" required> <br>
-  Password: <input type="password" name="pwd" required><br>
-  <input type="submit" value="login">
-  <p th:text=" ${errorMsg}"></p>
-</form>
-
 </body>
 </html>
