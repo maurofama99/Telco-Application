@@ -110,4 +110,8 @@ public class Service implements Serializable {
     public void setExtraGigaFee(int extraGigaFee) {
         ExtraGigaFee = extraGigaFee;
     }
+
+    public void setTelcoPackage(TelcoPackage telcoPackage) {
+        this.telcoPackage = telcoPackage;
+    }
 }

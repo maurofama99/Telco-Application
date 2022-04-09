@@ -23,4 +23,9 @@ public class OptionalService {
     public List<OptionalProduct> getAllOptionalProducts(){
         return em.createNamedQuery("OptionalProduct.getAllOptionalProducts", OptionalProduct.class).getResultList();
     }
+
+    public void createOptional(String name, int fee) {
+        OptionalProduct optionalProduct = new OptionalProduct(name, fee);
+        em.persist(optionalProduct);
+    }
 }

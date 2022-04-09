@@ -29,7 +29,7 @@ public class PackageService {
         telcoPackage.setName(name);
         telcoPackage.setServices(services);
         telcoPackage.setValidityPeriods(vperiods);
-        telcoPackage.setOptionalProducts(optionals);
-
+        if (optionals != null) telcoPackage.setOptionalProducts(optionals);
+        em.persist(telcoPackage);
     }
 }

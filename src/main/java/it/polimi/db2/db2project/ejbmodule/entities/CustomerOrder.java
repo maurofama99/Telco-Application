@@ -26,7 +26,6 @@ public class CustomerOrder implements Serializable {
     @JoinColumn (name = "packageID", referencedColumnName="id")
     private TelcoPackage telcoPackage;
 
-
     @ManyToOne
     @JoinColumn(name="validityperiodID", referencedColumnName="id")
     private ValidityPeriod validityPeriod;

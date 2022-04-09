@@ -43,4 +43,8 @@ public class ValidityPeriod implements Serializable {
     public Long getId() {
         return id;
     }
+
+    public void setTelcoPackage(TelcoPackage telcoPackage) {
+        this.telcoPackage = telcoPackage;
+    }
 }

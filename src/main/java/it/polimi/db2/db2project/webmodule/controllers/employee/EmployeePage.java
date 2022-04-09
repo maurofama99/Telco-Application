@@ -131,23 +131,34 @@ public class EmployeePage extends HttpServlet {
         response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
     }
 
-    private void doGetCreatePackage(HttpServletRequest request, HttpServletResponse response) {
+    private void doGetCreatePackage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        packageService.createPackage(StringEscapeUtils.escapeJava(request.getParameter("packagename")),(List<Service>) session.getAttribute("services"), (List<OptionalProduct>) session.getAttribute("optionals"), (List<ValidityPeriod>) session.getAttribute("vperiods"));
-        // TODO azzera tutti gli attributi della session
+        if (session.getAttribute("vperiods") == null || session.getAttribute("services") == null){
+            String path = "/WEB-INF/employeehome.html";
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            ctx.setVariable("errorMSG", "Please, create a valid package");
+            templateEngine.process(path, ctx, response.getWriter());
+        } else {
+            packageService.createPackage(StringEscapeUtils.escapeJava(request.getParameter("packagename")), (List<Service>) session.getAttribute("services"), (List<OptionalProduct>) session.getAttribute("optionals"), (List<ValidityPeriod>) session.getAttribute("vperiods"));
+            // TODO azzera tutti gli attributi della session
+            session.setAttribute("optionals", null);
+            session.setAttribute("vperiods", null);
+            session.setAttribute("services", null);
+            response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
+        }
     }
 
     private void doGetCreateOptional(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("optionals") == null) {
-            List<OptionalProduct> optionals = new ArrayList<OptionalProduct>();
-            optionals.add(new OptionalProduct(StringEscapeUtils.escapeJava(request.getParameter("name")), Integer.parseInt(request.getParameter("fee"))));
-            session.setAttribute("optionals", optionals);
-        } else {
-            List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
-            optionals.add(new OptionalProduct(StringEscapeUtils.escapeJava(request.getParameter("name")), Integer.parseInt(request.getParameter("fee"))));
-            session.setAttribute("optionals", optionals);
-        }
+//        List<OptionalProduct> optionals;
+//        if (session.getAttribute("optionals") == null) {
+//            optionals = new ArrayList<OptionalProduct>();
+//        } else {
+//            optionals = (List<OptionalProduct>) session.getAttribute("optionals");
+//        }
+        optionalService.createOptional(StringEscapeUtils.escapeJava(request.getParameter("name")), Integer.parseInt(request.getParameter("fee")));
+        //session.setAttribute("optionals", optionals);
         response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
         // persist anche nel db
     }

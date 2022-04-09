@@ -18,14 +18,13 @@ public class OptionalProduct implements Serializable {
     private String name;
     private int fee;
 
-
     @ManyToMany (mappedBy = "optionalProducts", fetch = FetchType.EAGER)
     private List<CustomerOrder> orders;
 
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable (name = "packageoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "packageID"))
-    private List<CustomerOrder> packages;
+    //@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    //@JoinTable (name = "packageoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "packageID"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "optionalProducts")
+    private List<TelcoPackage> packages;
 
     public OptionalProduct() {
     }
@@ -54,4 +53,14 @@ public class OptionalProduct implements Serializable {
         this.orders.add(customerOrder);
     }
 
+    public void setPackages(List<TelcoPackage> packages) {
+        this.packages = packages;
+    }
+
+    public void addPackage(TelcoPackage telcoPackage) {
+        if (this.packages == null){
+            packages = new ArrayList<>();
+        }
+        this.packages.add(telcoPackage);
+    }
 }

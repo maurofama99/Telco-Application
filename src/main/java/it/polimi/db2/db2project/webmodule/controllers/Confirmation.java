@@ -68,7 +68,7 @@ public class Confirmation extends HttpServlet{
             List<OptionalProduct> optionals = new ArrayList<>();
             if (request.getParameter("optionals") != null) {
                 for (String optProd : request.getParameterValues("optionals")) {
-                    OptionalProduct optionalProduct = optionalService.findOptionalByID(Integer.parseInt(optProd));
+                    OptionalProduct optionalProduct = optionalService.findOptionalByID(Long.parseLong(optProd));
                     optionals.add(optionalProduct);
                 }
             }
