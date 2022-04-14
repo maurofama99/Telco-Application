@@ -57,6 +57,7 @@ public class Confirmation extends HttpServlet{
         Integer packageID = null;
         TelcoPackage telcoPackage;
         Integer failedOrderID = null;
+        Integer amount = 0;
 
         if(request.getParameter("failedorderID")!=null){
             failedOrderID = Integer.parseInt(request.getParameter("failedorderID"));
@@ -65,11 +66,19 @@ public class Confirmation extends HttpServlet{
             //session.setAttribute("confirmation", true);
             session.setAttribute("failing", true);
 
+            ValidityPeriod validityPeriod = customerOrder.getValidityPeriod();
+            List<OptionalProduct> optionals = customerOrder.getOptionalProducts();
+            amount += validityPeriod.getDuration() * validityPeriod.getPrice();
+            for (OptionalProduct op : optionals) {
+                amount += op.getFee() * validityPeriod.getDuration();
+            }
+
             //per Thymeleaf da sistemare
             session.setAttribute("optionals", customerOrder.getOptionalProducts());
             session.setAttribute("startDate", customerOrder.getStartDate());
             session.setAttribute("validityPeriod", customerOrder.getValidityPeriod());
             session.setAttribute("telcopackage", customerOrder.getTelcoPackage());
+            session.setAttribute("amount", amount);
             session.setAttribute("confirmation", true);
         }else {
             packageID = (Integer) session.getAttribute("packageID");
@@ -90,12 +99,16 @@ public class Confirmation extends HttpServlet{
                 //retrieve Validity Period
                 ValidityPeriod validityPeriod = validityService.findValidityByID(Integer.parseInt(request.getParameterValues("validity")[0]));
 
-
+                amount += validityPeriod.getDuration() * validityPeriod.getPrice();
+                for (OptionalProduct op : optionals) {
+                    amount += op.getFee() * validityPeriod.getDuration();
+                }
                 //save the order variables in the session
                 session.setAttribute("optionals", optionals);
                 session.setAttribute("startDate", startDate);
                 session.setAttribute("validityPeriod", validityPeriod);
                 session.setAttribute("confirmation", true);
+                session.setAttribute("amount", amount);
                 session.setAttribute("telcopackage", telcoPackage);
             }
             if (session.getAttribute("user") != null) {

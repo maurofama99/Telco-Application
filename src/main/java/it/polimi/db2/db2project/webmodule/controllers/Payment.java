@@ -66,11 +66,7 @@ public class Payment extends  HttpServlet{
             List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
             LocalDate startDate = (LocalDate) session.getAttribute("startDate");
             LocalDate date = LocalDate.now();
-
-            amount += validityPeriod.getDuration() * validityPeriod.getPrice();
-            for (OptionalProduct op : optionals) {
-                amount += op.getFee() * validityPeriod.getDuration();
-            }
+            amount = (int) session.getAttribute("amount");
 
             if (int_random == 0) {
                 orderStatus = true;

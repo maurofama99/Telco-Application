@@ -37,6 +37,10 @@
 <div>
     <p th:text="${session.startDate}"></p>
 </div>
+<h4>Amount: </h4>
+<div>
+    <p th:text="${session.amount}"></p>
+</div>
 <div>
     <div th:if="${session.user2.equals('Anonymous')}">
         <form action="/db2_project_war_exploded/" method="POST">
