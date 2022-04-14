@@ -25,7 +25,7 @@ public class TelcoPackage implements Serializable {
     @JoinTable (name = "packageoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "packageID"), inverseJoinColumns = @JoinColumn(name = "optionalID"))
     private List<OptionalProduct> optionalProducts;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "telcoPackage", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage", cascade = CascadeType.ALL)
     private List<ValidityPeriod> validityPeriods;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage", cascade = CascadeType.ALL)
@@ -47,9 +47,6 @@ public class TelcoPackage implements Serializable {
         return services;
     }
 
-//    public List<ValidityPeriod> getValidityPeriods() {
-//        return validityPeriods;
-//    }
 
     public List<OptionalProduct> getOptionalProducts() {
         return optionalProducts;
@@ -79,5 +76,10 @@ public class TelcoPackage implements Serializable {
             s.setTelcoPackage(this);
         }
     }
+
+    public List<ValidityPeriod> getValidityPeriods() {
+        return validityPeriods;
+    }
+
 
 }

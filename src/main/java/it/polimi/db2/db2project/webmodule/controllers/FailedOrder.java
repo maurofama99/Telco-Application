@@ -1,6 +1,8 @@
 package it.polimi.db2.db2project.webmodule.controllers;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.polimi.db2.db2project.ejbmodule.entities.CustomerOrder;
-import it.polimi.db2.db2project.ejbmodule.entities.TelcoPackage;
-import it.polimi.db2.db2project.ejbmodule.entities.User;
+import it.polimi.db2.db2project.ejbmodule.entities.*;
 import it.polimi.db2.db2project.ejbmodule.services.CustomerService;
 import it.polimi.db2.db2project.ejbmodule.services.PackageService;
 import it.polimi.db2.db2project.ejbmodule.services.UserService;
@@ -25,16 +25,12 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 
-@WebServlet("/home")
-public class GoToHomepage extends HttpServlet {
+@WebServlet("/failedorder")
+public class FailedOrder extends HttpServlet{
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
-    @EJB(name = "it.polimi.db2.db2project.ejbmodule.services/PackageService")
-    private PackageService packageService;
-    @EJB(name = "it.polimi.db2.db2project.ejbmodule.services/CustomerService")
-    private CustomerService customerService;
 
-    public GoToHomepage() {
+    public FailedOrder(){
         super();
     }
 
@@ -47,39 +43,21 @@ public class GoToHomepage extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // If the user is not logged in (not present in session) redirect to the login
         HttpSession session = request.getSession();
-        if (session.isNew() || session.getAttribute("user") == null) {
-            session.setAttribute("user2", "Anonymous");
-        }else{
-            User user = (User) session.getAttribute("user");
-            session.setAttribute("user2", user.getName());
-            List<CustomerOrder> failedOrders = customerService.failedOrder((User) session.getAttribute("user"));
-            session.setAttribute("failed", failedOrders);
-        }
 
-        List<TelcoPackage> telcoPackages = null;
-        telcoPackages = packageService.getPackages();
-
-        //set to false a session parameter for later use
-        session.setAttribute("home", false);
-
-        String path = "/WEB-INF/home.html";
+        String path = "/WEB-INF/failedorder.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("telcopackage", telcoPackages);
 
         templateEngine.process(path, ctx, response.getWriter());
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
     }
 
     public void destroy() {
     }
-
 }

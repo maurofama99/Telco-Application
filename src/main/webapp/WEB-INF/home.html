@@ -18,7 +18,11 @@
     <!-- ELSE -->
     <div th:unless="${session.user2.equals('Anonymous')}">
         <form action="/db2_project_war_exploded" method="POST">
-            <input type="submit" value="go back">
+            <input type="submit" value="Logout (non ancora implementato)">
+        </form>
+        <br>
+        <form action="/db2_project_war_exploded/failedorder" method="POST">
+            <input type="submit" value="Failed Orders">
         </form>
     </div>
 </div>
@@ -28,7 +32,7 @@
 
     <th:block th:each="tp : ${telcopackage}">
         <br>
-        <form id="BuyPacakgeForm" th:action="@{/buypackage(packageid=${tp.id})}" method="POST">
+        <form id="BuyPackageForm" th:action="@{/buypackage(packageid=${tp.id})}" method="POST">
             <input type="submit" value="Buy Package">
         </form>
         <h3 th:text="${'Package Name: ' + tp.getName()}"></h3>

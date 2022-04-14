@@ -15,14 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.polimi.db2.db2project.ejbmodule.entities.OptionalProduct;
-import it.polimi.db2.db2project.ejbmodule.entities.TelcoPackage;
-import it.polimi.db2.db2project.ejbmodule.entities.User;
-import it.polimi.db2.db2project.ejbmodule.entities.ValidityPeriod;
-import it.polimi.db2.db2project.ejbmodule.services.OptionalService;
-import it.polimi.db2.db2project.ejbmodule.services.PackageService;
-import it.polimi.db2.db2project.ejbmodule.services.UserService;
-import it.polimi.db2.db2project.ejbmodule.services.ValidityService;
+import it.polimi.db2.db2project.ejbmodule.entities.*;
+import it.polimi.db2.db2project.ejbmodule.services.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -39,6 +33,8 @@ public class Confirmation extends HttpServlet{
     private OptionalService optionalService;
     @EJB(name = "it.polimi.db2.db2project.ejbmodule.services/ValidyService")
     private ValidityService validityService;
+    @EJB(name = "it.polimi.db2.db2project.ejbmodule.services/CustomerService")
+    private CustomerService customerService;
 
     public Confirmation() {
         super();
@@ -59,52 +55,64 @@ public class Confirmation extends HttpServlet{
 
         //retrieve packageID from session
         Integer packageID = null;
-        packageID = (Integer) session.getAttribute("packageID");
         TelcoPackage telcoPackage;
-        telcoPackage = packageService.findPackageByID(packageID);
+        Integer failedOrderID = null;
 
-        if(session.getAttribute("confirmation").equals(false)){
-            //retrieve selected optional products
-            List<OptionalProduct> optionals = new ArrayList<>();
-            if (request.getParameter("optionals") != null) {
-                for (String optProd : request.getParameterValues("optionals")) {
-                    OptionalProduct optionalProduct = optionalService.findOptionalByID(Long.parseLong(optProd));
-                    optionals.add(optionalProduct);
-                }
-            }
+        if(request.getParameter("failedorderID")!=null){
+            failedOrderID = Integer.parseInt(request.getParameter("failedorderID"));
+            CustomerOrder customerOrder = customerService.findOrderbyID(failedOrderID);
+            session.setAttribute("customerOrder", customerOrder);
+            //session.setAttribute("confirmation", true);
+            session.setAttribute("failing", true);
 
-            //retrieve start date
-            LocalDate startDate = LocalDate.parse(request.getParameterValues("startDate")[0]);
-
-            //retrieve Validity Period
-            ValidityPeriod validityPeriod = validityService.findValidityByID(Integer.parseInt(request.getParameterValues("validity")[0]));
-
-
-            //save the order variables in the session
-            session.setAttribute("optionals", optionals);
-            session.setAttribute("startDate", startDate);
-            session.setAttribute("validityPeriod", validityPeriod);
+            //per Thymeleaf da sistemare
+            session.setAttribute("optionals", customerOrder.getOptionalProducts());
+            session.setAttribute("startDate", customerOrder.getStartDate());
+            session.setAttribute("validityPeriod", customerOrder.getValidityPeriod());
+            session.setAttribute("telcopackage", customerOrder.getTelcoPackage());
             session.setAttribute("confirmation", true);
-            session.setAttribute("telcoPackage", telcoPackage);
-        }
-        if(session.getAttribute("user")!=null){
-            User user = (User) session.getAttribute("user");
-            session.setAttribute("user2", user.getName());
-        }
+        }else {
+            packageID = (Integer) session.getAttribute("packageID");
+            telcoPackage = packageService.findPackageByID(packageID);
+            if (session.getAttribute("confirmation").equals(false)) {
+                //retrieve selected optional products
+                List<OptionalProduct> optionals = new ArrayList<>();
+                if (request.getParameter("optionals") != null) {
+                    for (String optProd : request.getParameterValues("optionals")) {
+                        OptionalProduct optionalProduct = optionalService.findOptionalByID(Long.parseLong(optProd));
+                        optionals.add(optionalProduct);
+                    }
+                }
 
+                //retrieve start date
+                LocalDate startDate = LocalDate.parse(request.getParameterValues("startDate")[0]);
+
+                //retrieve Validity Period
+                ValidityPeriod validityPeriod = validityService.findValidityByID(Integer.parseInt(request.getParameterValues("validity")[0]));
+
+
+                //save the order variables in the session
+                session.setAttribute("optionals", optionals);
+                session.setAttribute("startDate", startDate);
+                session.setAttribute("validityPeriod", validityPeriod);
+                session.setAttribute("confirmation", true);
+                session.setAttribute("telcopackage", telcoPackage);
+            }
+            if (session.getAttribute("user") != null) {
+                User user = (User) session.getAttribute("user");
+                session.setAttribute("user2", user.getName());
+            }
+        }
 
         String path = "/WEB-INF/confirmation.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("telcopackage", telcoPackage);
-
 
         templateEngine.process(path, ctx, response.getWriter());
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = getServletContext().getContextPath() + "/home";
-        resp.sendRedirect(path);
+        doPost(req, resp);
     }
 
     public void destroy() {

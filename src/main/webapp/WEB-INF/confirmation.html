@@ -8,10 +8,10 @@
 <h1>Confirmation Page</h1>
 <h2>Sum up of your order</h2>
 <div>
-    <h3 th:text="${'Package Name: '+ telcopackage.getName()}"></h3>
+    <h3 th:text="${'Package Name: '+ session.telcopackage.getName()}"></h3>
 </div>
 <h4>Services: </h4>
-<th:block th:each="se : ${telcopackage.getServices()}">
+<th:block th:each="se : ${session.telcopackage.getServices()}">
     <td th:text="${'type: ' + se.getType()}"></td>
     <td th:if="${se.getNMin()!=0}" th:text="${'Nmin: ' + se.getNMin()}"></td>
     <td th:if="${se.getNSMS()!=0}" th:text="${'Nsms: ' + se.getNSMS()}"></td>

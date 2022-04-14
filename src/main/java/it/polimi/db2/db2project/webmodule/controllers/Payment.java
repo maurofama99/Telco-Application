@@ -1,9 +1,6 @@
 package it.polimi.db2.db2project.webmodule.controllers;
 
-import it.polimi.db2.db2project.ejbmodule.entities.OptionalProduct;
-import it.polimi.db2.db2project.ejbmodule.entities.TelcoPackage;
-import it.polimi.db2.db2project.ejbmodule.entities.User;
-import it.polimi.db2.db2project.ejbmodule.entities.ValidityPeriod;
+import it.polimi.db2.db2project.ejbmodule.entities.*;
 import it.polimi.db2.db2project.ejbmodule.exceptions.WrongCredentialsException;
 import it.polimi.db2.db2project.ejbmodule.services.*;
 import org.apache.commons.text.StringEscapeUtils;
@@ -57,37 +54,42 @@ public class Payment extends  HttpServlet{
         int amount = 0;
         boolean orderStatus;
 
-        User user = (User) session.getAttribute("user");
-        TelcoPackage telcoPackage = (TelcoPackage) session.getAttribute("telcoPackage");
-        ValidityPeriod validityPeriod = (ValidityPeriod) session.getAttribute("validityPeriod");
-        List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
-        LocalDate startDate = (LocalDate) session.getAttribute("startDate");
-        LocalDate date = LocalDate.now();
-
-        amount+= validityPeriod.getDuration()* validityPeriod.getPrice();
-        for (OptionalProduct op: optionals) {
-            amount+= op.getFee()*validityPeriod.getDuration();
-        }
-
-        if(int_random==0){
-            orderStatus = true;
+        if(session.getAttribute("failing") != null && session.getAttribute("failing").equals(true)) {
+            CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
+            customerService.updateStatus(customerOrder.getId());
             session.setAttribute("status", true);
+
         }else{
-            orderStatus = false;
-            session.setAttribute("status", false);
+            User user = (User) session.getAttribute("user");
+            TelcoPackage telcoPackage = (TelcoPackage) session.getAttribute("telcopackage");
+            ValidityPeriod validityPeriod = (ValidityPeriod) session.getAttribute("validityPeriod");
+            List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
+            LocalDate startDate = (LocalDate) session.getAttribute("startDate");
+            LocalDate date = LocalDate.now();
+
+            amount += validityPeriod.getDuration() * validityPeriod.getPrice();
+            for (OptionalProduct op : optionals) {
+                amount += op.getFee() * validityPeriod.getDuration();
+            }
+
+            if (int_random == 0) {
+                orderStatus = true;
+                session.setAttribute("status", true);
+            } else {
+                orderStatus = false;
+                session.setAttribute("status", false);
+            }
+
+            //session parameter to redirect to home
+            session.setAttribute("home", true);
+            customerService.newOrder(user, telcoPackage, validityPeriod, date, startDate, orderStatus, amount, optionals);
         }
-
-        //session parameter to redirect to home
-        session.setAttribute("home", true);
-
-        customerService.newOrder(user, telcoPackage, validityPeriod, date, startDate, orderStatus, amount, optionals);
 
         String path = "/WEB-INF/payment.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         templateEngine.process(path, ctx, response.getWriter());
-
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

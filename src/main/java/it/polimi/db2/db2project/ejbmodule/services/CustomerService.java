@@ -26,4 +26,25 @@ public class CustomerService {
         customerOrder.setOptionalProducts(optionals);
         em.persist(customerOrder);
     }
+
+    public List<CustomerOrder> failedOrder(User user){
+        List<CustomerOrder> customerOrders = null;
+        customerOrders = em.createNamedQuery("CustomerOrder.failed", CustomerOrder.class).setParameter(1, user.getName()).getResultList();
+        return customerOrders;
+    }
+
+    public CustomerOrder findOrderbyID(Integer Id) {
+        CustomerOrder customerOrder = em.find(CustomerOrder.class, Id);
+        return customerOrder;
+    }
+
+    //da controllare che abbia senso sta cosa
+    public void updateStatus(Long Id){
+        CustomerOrder customerOrder = em.find(CustomerOrder.class, Id);
+
+        customerOrder.setOrderStatus(true);
+        em.merge(customerOrder);
+
+        em.flush();
+    }
 }
