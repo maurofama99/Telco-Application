@@ -81,6 +81,10 @@ public class Payment extends  HttpServlet{
             customerService.newOrder(user, telcoPackage, validityPeriod, date, startDate, orderStatus, amount, optionals);
         }
 
+        //per non far comprare di nuovo un pacchetto subito
+        session.setAttribute("payment", true);
+
+
         String path = "/WEB-INF/payment.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -89,7 +93,8 @@ public class Payment extends  HttpServlet{
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        String path = getServletContext().getContextPath() + "/home";
+        resp.sendRedirect(path);
     }
 
     public void destroy() {

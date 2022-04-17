@@ -5,6 +5,11 @@
     <title>Failed Orders</title>
 </head>
 <body>
+<div style="text-align:right;">
+    <form action="/db2_project_war_exploded/home" method="POST">
+        <input type="submit" value="Back to Home">
+    </form>
+</div>
 <h1>Failed Orders</h1>
     <th:block th:each="fo : ${session.failed}">
     <form id="BuyFailedPackageForm" th:action="@{/confirmation(failedorderID=${fo.getId()})}" method="POST">

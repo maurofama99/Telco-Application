@@ -70,7 +70,11 @@ public class BuyPackage extends HttpServlet{
 
 
         templateEngine.process(path, ctx, response.getWriter());
+    }
 
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String path = getServletContext().getContextPath() + "/home";
+        resp.sendRedirect(path);
     }
 
     public void destroy() {

@@ -3,22 +3,4 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
-
-    <filter>
-        <filter-name>LoginChecker</filter-name>
-        <filter-class>it.polimi.db2.db2project.webmodule.controllers.filters.LoggedIn</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>LoginChecker</filter-name>
-        <url-pattern>/failedorder</url-pattern>
-        <url-pattern>/confirmation</url-pattern>
-        <url-pattern>/CreateMission</url-pattern>
-        <url-pattern>/DeleteMission</url-pattern>
-        <url-pattern>/GetMissionDetails</url-pattern>
-        <url-pattern>/Home</url-pattern>
-        <url-pattern>/PropagationTester1Tx</url-pattern>
-        <url-pattern>/PropagationTester2Tx</url-pattern>
-        <url-pattern>/UpdateProfile</url-pattern>
-        <url-pattern>/Logout</url-pattern>
-    </filter-mapping>
 </web-app>

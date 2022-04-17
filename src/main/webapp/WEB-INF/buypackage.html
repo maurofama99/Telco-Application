@@ -7,6 +7,11 @@
     <title>Buy Service</title>
 </head>
 <body>
+<div style="text-align:right;">
+    <form action="/db2_project_war_exploded/home" method="POST">
+        <input type="submit" value="Back to Home">
+    </form>
+</div>
 <h2>Configure the package</h2>
 <div>
     <h3 th:text="${'Package Name: '+ telcopackage.getName()}"></h3>
@@ -49,7 +54,7 @@
     <div class="form-group">
         <h4>Select the starting date of the subscription: </h4>
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" value="2022-04-03" min="2022-04-03">
+        <input type="date" id="startDate" name="startDate" value="2022-05-31" min="2022-05-31">
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Confirm</button>

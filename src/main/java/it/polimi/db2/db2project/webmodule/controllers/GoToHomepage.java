@@ -63,8 +63,8 @@ public class GoToHomepage extends HttpServlet {
         List<TelcoPackage> telcoPackages = null;
         telcoPackages = packageService.getPackages();
 
-        //set to false a session parameter for later use
-        session.setAttribute("home", false);
+        //per non far comprare di nuovo un pacchetto subito
+        session.setAttribute("payment", false);
 
         String path = "/WEB-INF/home.html";
         ServletContext servletContext = getServletContext();

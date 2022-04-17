@@ -59,73 +59,78 @@ public class Confirmation extends HttpServlet{
         Integer failedOrderID = null;
         Integer amount = 0;
 
-        if(request.getParameter("failedorderID")!=null){
-            failedOrderID = Integer.parseInt(request.getParameter("failedorderID"));
-            CustomerOrder customerOrder = customerService.findOrderbyID(failedOrderID);
-            session.setAttribute("customerOrder", customerOrder);
-            //session.setAttribute("confirmation", true);
-            session.setAttribute("failing", true);
+        if(session.getAttribute("payment").equals(false)) {
+            if (request.getParameter("failedorderID") != null) {
+                failedOrderID = Integer.parseInt(request.getParameter("failedorderID"));
+                CustomerOrder customerOrder = customerService.findOrderbyID(failedOrderID);
+                session.setAttribute("customerOrder", customerOrder);
+                //session.setAttribute("confirmation", true);
+                session.setAttribute("failing", true);
 
-            ValidityPeriod validityPeriod = customerOrder.getValidityPeriod();
-            List<OptionalProduct> optionals = customerOrder.getOptionalProducts();
-            amount += validityPeriod.getDuration() * validityPeriod.getPrice();
-            for (OptionalProduct op : optionals) {
-                amount += op.getFee() * validityPeriod.getDuration();
-            }
-
-            //per Thymeleaf da sistemare
-            session.setAttribute("optionals", customerOrder.getOptionalProducts());
-            session.setAttribute("startDate", customerOrder.getStartDate());
-            session.setAttribute("validityPeriod", customerOrder.getValidityPeriod());
-            session.setAttribute("telcopackage", customerOrder.getTelcoPackage());
-            session.setAttribute("amount", amount);
-            session.setAttribute("confirmation", true);
-        }else {
-            packageID = (Integer) session.getAttribute("packageID");
-            telcoPackage = packageService.findPackageByID(packageID);
-            if (session.getAttribute("confirmation").equals(false)) {
-                //retrieve selected optional products
-                List<OptionalProduct> optionals = new ArrayList<>();
-                if (request.getParameter("optionals") != null) {
-                    for (String optProd : request.getParameterValues("optionals")) {
-                        OptionalProduct optionalProduct = optionalService.findOptionalByID(Long.parseLong(optProd));
-                        optionals.add(optionalProduct);
-                    }
-                }
-
-                //retrieve start date
-                LocalDate startDate = LocalDate.parse(request.getParameterValues("startDate")[0]);
-
-                //retrieve Validity Period
-                ValidityPeriod validityPeriod = validityService.findValidityByID(Integer.parseInt(request.getParameterValues("validity")[0]));
-
+                ValidityPeriod validityPeriod = customerOrder.getValidityPeriod();
+                List<OptionalProduct> optionals = customerOrder.getOptionalProducts();
                 amount += validityPeriod.getDuration() * validityPeriod.getPrice();
                 for (OptionalProduct op : optionals) {
                     amount += op.getFee() * validityPeriod.getDuration();
                 }
-                //save the order variables in the session
-                session.setAttribute("optionals", optionals);
-                session.setAttribute("startDate", startDate);
-                session.setAttribute("validityPeriod", validityPeriod);
-                session.setAttribute("confirmation", true);
+
+                //per Thymeleaf da sistemare
+                session.setAttribute("optionals", customerOrder.getOptionalProducts());
+                session.setAttribute("startDate", customerOrder.getStartDate());
+                session.setAttribute("validityPeriod", customerOrder.getValidityPeriod());
+                session.setAttribute("telcopackage", customerOrder.getTelcoPackage());
                 session.setAttribute("amount", amount);
-                session.setAttribute("telcopackage", telcoPackage);
+                session.setAttribute("confirmation", true);
+            } else {
+                packageID = (Integer) session.getAttribute("packageID");
+                telcoPackage = packageService.findPackageByID(packageID);
+                if (session.getAttribute("confirmation").equals(false)) {
+                    //retrieve selected optional products
+                    List<OptionalProduct> optionals = new ArrayList<>();
+                    if (request.getParameter("optionals") != null) {
+                        for (String optProd : request.getParameterValues("optionals")) {
+                            OptionalProduct optionalProduct = optionalService.findOptionalByID(Long.parseLong(optProd));
+                            optionals.add(optionalProduct);
+                        }
+                    }
+
+                    //retrieve start date
+                    LocalDate startDate = LocalDate.parse(request.getParameterValues("startDate")[0]);
+
+                    //retrieve Validity Period
+                    ValidityPeriod validityPeriod = validityService.findValidityByID(Integer.parseInt(request.getParameterValues("validity")[0]));
+
+                    amount += validityPeriod.getDuration() * validityPeriod.getPrice();
+                    for (OptionalProduct op : optionals) {
+                        amount += op.getFee() * validityPeriod.getDuration();
+                    }
+                    //save the order variables in the session
+                    session.setAttribute("optionals", optionals);
+                    session.setAttribute("startDate", startDate);
+                    session.setAttribute("validityPeriod", validityPeriod);
+                    session.setAttribute("amount", amount);
+                    session.setAttribute("telcopackage", telcoPackage);
+                    session.setAttribute("confirmation", true);
+                }
+                if (session.getAttribute("user") != null) {
+                    User user = (User) session.getAttribute("user");
+                    session.setAttribute("user2", user.getName());
+                }
             }
-            if (session.getAttribute("user") != null) {
-                User user = (User) session.getAttribute("user");
-                session.setAttribute("user2", user.getName());
-            }
+
+            String path = "/WEB-INF/confirmation.html";
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            templateEngine.process(path, ctx, response.getWriter());
+        }else{
+            String path = getServletContext().getContextPath() + "/home";
+            response.sendRedirect(path);
         }
-
-        String path = "/WEB-INF/confirmation.html";
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
-        templateEngine.process(path, ctx, response.getWriter());
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        String path = getServletContext().getContextPath() + "/home";
+        resp.sendRedirect(path);
     }
 
     public void destroy() {
