@@ -26,8 +26,7 @@ public class OptionalProduct implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "optionalProducts")
     private List<TelcoPackage> packages;
 
-    public OptionalProduct() {
-    }
+    public OptionalProduct() {}
 
     public OptionalProduct(String name, int fee) {
         this.name = name;
