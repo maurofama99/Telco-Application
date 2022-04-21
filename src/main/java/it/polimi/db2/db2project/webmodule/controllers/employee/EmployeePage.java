@@ -47,6 +47,7 @@ public class EmployeePage extends HttpServlet {
         HttpSession session = request.getSession();
         final WebContext ctx = new WebContext(request, response, getServletContext(), request.getLocale());
         if (session.isNew() || session.getAttribute("emp") == null) {
+            session.setAttribute("confirmation", false);
             templateEngine.process("/index.html", ctx, response.getWriter());
         } else {
             Employee user = (Employee) session.getAttribute("emp");

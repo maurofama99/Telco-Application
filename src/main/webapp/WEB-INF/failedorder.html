@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Failed Orders</title>
+</head>
+<body>
+<div style="text-align:right;">
+    <form action="/db2_project_war_exploded/home" method="POST">
+        <input type="submit" value="Back to Home">
+    </form>
+</div>
+<h1>Failed Orders</h1>
+    <th:block th:each="fo : ${session.failed}">
+    <form id="BuyFailedPackageForm" th:action="@{/confirmation(failedorderID=${fo.getId()})}" method="POST">
+        <input type="submit" value="Buy Package">
+    </form>
+    <div>
+        <h3 th:text="${'Package Name: '+ fo.getTelcoPackage().getName()}"></h3>
+    </div>
+    <h4>Services: </h4>
+    <th:block th:each="se : ${fo.getTelcoPackage().getServices()}">
+        <td th:text="${'type: ' + se.getType()}"></td>
+        <td th:if="${se.getNMin()!=0}" th:text="${'Nmin: ' + se.getNMin()}"></td>
+        <td th:if="${se.getNSMS()!=0}" th:text="${'Nsms: ' + se.getNSMS()}"></td>
+        <td th:if="${se.getExtraMinFee()!=0}" th:text="${'ExtraMinFee: ' + se.getExtraMinFee()}"></td>
+        <td th:if="${se.getExtraSMSFee()!=0}" th:text="${'ExtraSmsFee: ' + se.getExtraSMSFee()}"></td>
+        <td th:if="${se.getNGiga()!=0}" th:text="${'Ngiga: ' + se.getNGiga()}"></td>
+        <td th:if="${se.getExtraGigaFee()!=0}" th:text="${'ExtraGIgaFee: ' + se.getExtraGigaFee()}"></td>
+        <br>
+    </th:block>
+    <br>
+    <h4>Validity Period: </h4>
+    <div>
+        <p th:text="${'Duration: ' + fo.getValidityPeriod().getDuration() + ' Fee: ' + fo.getValidityPeriod().getPrice()}"></p>
+    </div>
+    <br>
+    <h4>Optionals: </h4>
+    <th:block th:each="op : ${fo.getOptionalProducts()}">
+        <td th:text="${'Name: ' + op.getName() + 'Fee: ' + op.getFee()}"></td>
+        <br>
+    </th:block>
+    <br>
+    <h4>Start date: </h4>
+    <div>
+        <p th:text="${fo.getStartDate}"></p>
+    </div>
+    <br>
+    <h4>Amount: </h4>
+    <div>
+        <p th:text="${fo.getAmount()}"></p>
+    </div>
+    <hr>
+    </th:block>
+
+</body>
+</html>

@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customerorder", schema = "db2_project_schema")
+@NamedQuery(name = "CustomerOrder.failed", query = "SELECT r FROM CustomerOrder r  WHERE r.user.name = ?1 and r.orderStatus = false")
 public class CustomerOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 

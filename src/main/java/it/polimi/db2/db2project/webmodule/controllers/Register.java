@@ -85,17 +85,9 @@ public class Register extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        WebContext ctx = new WebContext(req, resp, getServletContext());
-        if (session.isNew() || session.getAttribute("user") == null) {
-            ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(ctx.getServletContext());
-            TemplateEngine engine = new TemplateEngine();
-            engine.setTemplateResolver(resolver);
-            engine.process("index.html", ctx, ctx.getResponse().getWriter());
-            return;
-        }
-
-        String homePath = getServletContext().getContextPath() + "/hello-world";
-        resp.sendRedirect(homePath);
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+        String path = "/index.html";
+        templateEngine.process(path, ctx, resp.getWriter());
     }
 }
