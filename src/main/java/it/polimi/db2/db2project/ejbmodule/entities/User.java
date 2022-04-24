@@ -22,7 +22,6 @@ public class User implements Serializable {
     private String email;
     private String password;
     private int insolvent;
-    private int alert;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<CustomerOrder> orders;

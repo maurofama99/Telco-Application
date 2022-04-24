@@ -14,6 +14,8 @@ public class Alert implements Serializable {
     @Id
     private Long id;
     private int amount;
+    private String name;
+    private String mail;
     private LocalDate rejectiondate;
 
     @OneToOne
