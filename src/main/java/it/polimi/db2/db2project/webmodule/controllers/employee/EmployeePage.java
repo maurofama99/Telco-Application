@@ -136,13 +136,11 @@ public class EmployeePage extends HttpServlet {
         HttpSession session = request.getSession();
         if (session.getAttribute("vperiods") == null || session.getAttribute("services") == null){
             String path = "/WEB-INF/employeehome.html";
-            ServletContext servletContext = getServletContext();
-            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            final WebContext ctx = new WebContext(request, response, getServletContext(), request.getLocale());
             ctx.setVariable("errorMSG", "Please, create a valid package");
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             packageService.createPackage(StringEscapeUtils.escapeJava(request.getParameter("packagename")), (List<Service>) session.getAttribute("services"), (List<OptionalProduct>) session.getAttribute("optionals"), (List<ValidityPeriod>) session.getAttribute("vperiods"));
-            // TODO azzera tutti gli attributi della session
             session.setAttribute("optionals", null);
             session.setAttribute("vperiods", null);
             session.setAttribute("services", null);
