@@ -16,7 +16,7 @@ public class UserService {
     /**
      * Check if user credentials are correct and returns the corresponding User object if true
      * @return User
-     * @throws WrongCredentialsException if could not verify credentials
+     * @throws WrongCredentialsException if it is not possible to verify credentials
      * @throws NonUniqueResultException if more than one user registered with same credentials
      */
     public User checkCredentials(String username, String password) throws WrongCredentialsException, NonUniqueResultException {

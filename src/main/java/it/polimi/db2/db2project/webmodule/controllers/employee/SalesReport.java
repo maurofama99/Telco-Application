@@ -1,11 +1,15 @@
 package it.polimi.db2.db2project.webmodule.controllers.employee;
 
 import it.polimi.db2.db2project.ejbmodule.entities.Employee;
+import it.polimi.db2.db2project.ejbmodule.entities.OptionalProduct;
+import it.polimi.db2.db2project.ejbmodule.services.OptionalService;
+import it.polimi.db2.db2project.ejbmodule.services.SalesReportService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +18,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/salesreport")
 public class SalesReport extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
+    @EJB(name = "it.polimi.db2.db2project.ejbmodule.services/SalesReportService")
+    private SalesReportService salesReportService;
 
     public void init() throws ServletException {
         ServletContext servletContext = getServletContext();
@@ -38,6 +45,7 @@ public class SalesReport extends HttpServlet {
         } else {
             Employee user = (Employee) session.getAttribute("emp");
             session.setAttribute("empname", user.getName());
+
             templateEngine.process("/WEB-INF/salesreport.html", ctx, response.getWriter());
         }
     }

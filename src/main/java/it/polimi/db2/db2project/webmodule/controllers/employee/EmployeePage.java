@@ -70,25 +70,28 @@ public class EmployeePage extends HttpServlet {
                     doPostFixedPhone(request, response);
                     break;
                 case "createpackage":
-                    doGetCreatePackage(request, response);
+                    doPostCreatePackage(request, response);
                     break;
                 case "addexistingoptionals":
-                    doGetAddExistingOptionals(request, response);
+                    doPostAddExistingOptionals(request, response);
                     break;
                 case "mobilephone":
-                    doGetMobilePhone(request, response);
+                    doPostMobilePhone(request, response);
                     break;
                 case "fixedinternet":
-                    doGetFixedInternet(request, response);
+                    doPostFixedInternet(request, response);
                     break;
                 case "mobileinternet":
-                    doGetMobileInternet(request, response);
+                    doPostMobileInternet(request, response);
                     break;
                 case "createoptional":
-                    doGetCreateOptional(request, response);
+                    doPostCreateOptional(request, response);
                     break;
                 case "createvp":
-                    doGetCreateVp(request, response);
+                    doPostCreateVp(request, response);
+                    break;
+                case "salesreport":
+                    doPostSalesReport(request, response);
                     break;
                 default:
                     throw new IllegalStateException("Cannot find action keyword, check keyword correctness");
@@ -96,7 +99,13 @@ public class EmployeePage extends HttpServlet {
         }
     }
 
-    private void doGetCreateVp(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostSalesReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String path = "/WEB-INF/salesreport.html";
+        final WebContext ctx = new WebContext(request, response, getServletContext(), request.getLocale());
+        templateEngine.process(path, ctx, response.getWriter());
+    }
+
+    private void doPostCreateVp(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("vperiods") == null) {
             List<ValidityPeriod> vperiods = new ArrayList<ValidityPeriod>();
@@ -110,7 +119,7 @@ public class EmployeePage extends HttpServlet {
         response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
     }
 
-    private void doGetAddExistingOptionals(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostAddExistingOptionals(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String[] checkedoptionalsids = request.getParameterValues("checkedexistingoptionals"); // qui ho messo in checkedoptionalsids tutti gli id degli optionals esistenti selezionati
         if (session.getAttribute("optionals") == null) {
@@ -132,7 +141,7 @@ public class EmployeePage extends HttpServlet {
         response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
     }
 
-    private void doGetCreatePackage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostCreatePackage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("vperiods") == null || session.getAttribute("services") == null){
             String path = "/WEB-INF/employeehome.html";
@@ -148,7 +157,7 @@ public class EmployeePage extends HttpServlet {
         }
     }
 
-    private void doGetCreateOptional(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostCreateOptional(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
 //        List<OptionalProduct> optionals;
 //        if (session.getAttribute("optionals") == null) {
@@ -162,7 +171,7 @@ public class EmployeePage extends HttpServlet {
         // persist anche nel db
     }
 
-    private void doGetMobileInternet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostMobileInternet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("services") == null) {
             List<Service> services = new ArrayList<Service>();
@@ -176,7 +185,7 @@ public class EmployeePage extends HttpServlet {
         response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
     }
 
-    private void doGetFixedInternet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostFixedInternet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("services") == null) {
             List<Service> services = new ArrayList<Service>();
@@ -190,7 +199,7 @@ public class EmployeePage extends HttpServlet {
         response.sendRedirect(getServletContext().getContextPath() + "/employeepage");
     }
 
-    private void doGetMobilePhone(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void doPostMobilePhone(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("services") == null) {
             List<Service> services = new ArrayList<Service>();

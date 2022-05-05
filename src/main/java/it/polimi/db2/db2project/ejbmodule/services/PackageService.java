@@ -14,14 +14,11 @@ public class PackageService {
     private EntityManager em;
 
     public List<TelcoPackage> getPackages(){
-        List<TelcoPackage> telcoPackages = null;
-        telcoPackages = em.createNamedQuery("TelcoPackage.getPackages", TelcoPackage.class).getResultList();
-        return telcoPackages;
+        return em.createNamedQuery("TelcoPackage.getPackages", TelcoPackage.class).getResultList();
     }
 
     public TelcoPackage findPackageByID(Integer id){
-        TelcoPackage telcoPackage = em.find(TelcoPackage.class, id);
-        return telcoPackage;
+        return em.find(TelcoPackage.class, id);
     }
 
     public void createPackage(String name, List<Service> services, List<OptionalProduct> optionals, List<ValidityPeriod> vperiods) {
