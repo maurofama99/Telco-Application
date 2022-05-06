@@ -18,6 +18,7 @@ public class CustomerOrder implements Serializable {
     private LocalDate startDate;
     private boolean orderStatus; // 0 -> invalid, 1 -> valid
     private int amount;
+    private int noopamount; // total amount without considering optionals fee
 
     @ManyToOne
     @JoinColumn (name = "userid")
@@ -34,6 +35,7 @@ public class CustomerOrder implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable (name = "orderoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "orderID"), inverseJoinColumns = @JoinColumn(name = "optionalID"))
     private List<OptionalProduct> optionalProducts;
+
 
     public Long getId() {
         return id;
@@ -101,5 +103,9 @@ public class CustomerOrder implements Serializable {
 
     public void setOptionalProducts(List<OptionalProduct> optionalProducts) {
         this.optionalProducts = optionalProducts;
+    }
+
+    public void setNoopAmount(int noopamount) {
+        this.noopamount = noopamount;
     }
 }

@@ -17,5 +17,6 @@ public class MV2 {
     private String packagename;
     private int optionals;
     private int amount;
+    private int noopamount;
 
 }

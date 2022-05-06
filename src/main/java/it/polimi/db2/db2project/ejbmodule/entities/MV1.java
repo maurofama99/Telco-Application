@@ -15,7 +15,6 @@ public class MV1 {
 
     private int packageID;
     private String packagename;
-    private int vperiodID;
-
+    private int vperiod;
 
 }

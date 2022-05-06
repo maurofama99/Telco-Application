@@ -52,6 +52,7 @@ public class Payment extends  HttpServlet{
         Random rand = new Random();
         int int_random = rand.nextInt(2);
         int amount = 0;
+        int noopamount = 0;
         boolean orderStatus;
 
         if(session.getAttribute("failing") != null && session.getAttribute("failing").equals(true)) {
@@ -67,6 +68,7 @@ public class Payment extends  HttpServlet{
             LocalDate startDate = (LocalDate) session.getAttribute("startDate");
             LocalDate date = LocalDate.now();
             amount = (int) session.getAttribute("amount");
+            noopamount = (int) session.getAttribute("noopamount");
 
             if (int_random == 0) {
                 orderStatus = true;
@@ -78,7 +80,7 @@ public class Payment extends  HttpServlet{
 
             //session parameter to redirect to home
             session.setAttribute("home", true);
-            customerService.newOrder(user, telcoPackage, validityPeriod, date, startDate, orderStatus, amount, optionals);
+            customerService.newOrder(user, telcoPackage, validityPeriod, date, startDate, orderStatus, amount, noopamount, optionals);
         }
 
         //per non far comprare di nuovo un pacchetto subito
