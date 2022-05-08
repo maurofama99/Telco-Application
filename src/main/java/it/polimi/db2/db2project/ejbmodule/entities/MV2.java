@@ -1,12 +1,15 @@
 package it.polimi.db2.db2project.ejbmodule.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mv2", schema = "db2_project_schema")
+// The total value of sales per package with the optional products.
+@NamedQuery(name = "mv2.totvalueop", query = "SELECT mv.packageID, mv.packagename, sum(mv.amount) FROM MV2 mv GROUP BY mv.packageID, mv.packagename")
+// The total value of sales per package without the optional products.
+@NamedQuery(name = "mv2.totvaluenoop", query = "SELECT mv.packageID, mv.packagename, sum(mv.noopamount) FROM MV2 mv GROUP BY mv.packageID, mv.packagename")
+// Number of optional product sold together with each service package.
+@NamedQuery(name = "mv2.opperpackage", query = "SELECT sum(mv.optionals) FROM MV2 mv GROUP BY mv.packageID")
 public class MV2 {
 
     @Id

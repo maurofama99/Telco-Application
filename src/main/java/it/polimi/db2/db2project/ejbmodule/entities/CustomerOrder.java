@@ -108,4 +108,8 @@ public class CustomerOrder implements Serializable {
     public void setNoopAmount(int noopamount) {
         this.noopamount = noopamount;
     }
+
+    public int getNoopamount() {
+        return noopamount;
+    }
 }
