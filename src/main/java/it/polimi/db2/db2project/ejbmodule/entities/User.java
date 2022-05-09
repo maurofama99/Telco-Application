@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "user", schema = "db2_project_schema")
 @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.name = ?1 and r.password = ?2")
 @NamedQuery(name = "User.checkSameUser", query = "SELECT r FROM User r  WHERE r.name = ?1")
+@NamedQuery(name = "User.insolvent", query = "SELECT r FROM User r  WHERE r.insolvent <> 0")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +24,7 @@ public class User implements Serializable {
     private String password;
     private int insolvent;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<CustomerOrder> orders;
 
     // per adesso non stiamo mettendo alert, quindi da user non possiamo arrivare ad alert

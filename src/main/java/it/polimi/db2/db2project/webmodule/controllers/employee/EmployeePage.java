@@ -90,20 +90,12 @@ public class EmployeePage extends HttpServlet {
                 case "createvp":
                     doPostCreateVp(request, response);
                     break;
-                case "salesreport":
-                    doPostSalesReport(request, response);
-                    break;
                 default:
                     throw new IllegalStateException("Cannot find action keyword, check keyword correctness");
             }
         }
     }
 
-    private void doPostSalesReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String path = "/WEB-INF/salesreport.html";
-        final WebContext ctx = new WebContext(request, response, getServletContext(), request.getLocale());
-        templateEngine.process(path, ctx, response.getWriter());
-    }
 
     private void doPostCreateVp(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();

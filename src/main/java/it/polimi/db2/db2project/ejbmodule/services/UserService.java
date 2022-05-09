@@ -54,4 +54,8 @@ public class UserService {
         em.persist(newUser);
     }
 
+    public List<User> insolventUsers(){
+        return em.createNamedQuery("User.insolvent", User.class).getResultList();
+    }
+
 }

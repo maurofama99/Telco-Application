@@ -1,5 +1,6 @@
 package it.polimi.db2.db2project.ejbmodule.services;
 
+import it.polimi.db2.db2project.ejbmodule.entities.Alert;
 import it.polimi.db2.db2project.ejbmodule.entities.MV3;
 
 import javax.ejb.Stateless;
@@ -48,8 +49,12 @@ public class SalesReportService {
     /*-----MV3-----*/
 
     // Best seller optional product
-    public MV3 bestSellerOp(){
-        return em.createNamedQuery("mv2.totvaluenoop", MV3.class).getSingleResult();
+    public Object[] bestSellerOp(){
+        return (Object[]) em.createNamedQuery("mv3.bestseller").getSingleResult();
+    }
+
+    public List<Object[]> alerts(){
+        return  em.createNamedQuery("Alert.everybody").getResultList();
     }
 
 }

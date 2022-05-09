@@ -48,4 +48,8 @@ public class CustomerService {
 
         em.flush();
     }
+
+    public List<CustomerOrder> suspendedOrders (){
+        return em.createNamedQuery("CustomerOrder.suspended", CustomerOrder.class).getResultList();
+    }
 }
