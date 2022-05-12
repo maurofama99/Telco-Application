@@ -54,6 +54,7 @@ public class Payment extends  HttpServlet{
         int amount = 0;
         int noopamount = 0;
         boolean orderStatus;
+        //set confirmation false
 
         if(session.getAttribute("failing") != null && session.getAttribute("failing").equals(true)) {
             CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
