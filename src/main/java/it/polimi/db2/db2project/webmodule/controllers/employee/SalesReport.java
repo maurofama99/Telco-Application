@@ -57,7 +57,7 @@ public class SalesReport extends HttpServlet {
         OptionalProduct op;
         List<User> insolventUsers = new ArrayList<>();
         List<CustomerOrder> suspendedOrders = new ArrayList<>();
-        List<Object[]> alerts = new ArrayList<>();
+        List<Alert> alerts = new ArrayList<>();
         if (session.isNew() || session.getAttribute("emp") == null) {
             templateEngine.process("/index.html", ctx, response.getWriter());
         } else {

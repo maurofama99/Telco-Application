@@ -23,11 +23,14 @@ public class User implements Serializable {
     private String email;
     private String password;
     private int insolvent;
+    private int alert;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<CustomerOrder> orders;
 
     // per adesso non stiamo mettendo alert, quindi da user non possiamo arrivare ad alert
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Alert> alerts;
 
     public int getId() {
         return id;
@@ -63,6 +66,10 @@ public class User implements Serializable {
 
     public void incrementInsolvent() {
         this.insolvent++;
+    }
+
+    public List<Alert> getAlerts() {
+        return alerts;
     }
 }
 

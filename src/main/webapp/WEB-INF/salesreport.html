@@ -234,12 +234,12 @@
                 <tbody>
                 <th:block th:each="a : ${session.alerts}">
                     <tr>
-                        <th scope="row"th:text ="${a[0]}"</th>
-                        <td th:text ="${a[3]}"</td>
-                        <td th:text ="${a[6]}"</td>
-                        <td th:text ="${a[4])}"</td>
-                        <td th:text ="${a[1]}"</td>
-                        <td th:text ="${a[2]}"</td>
+                        <th scope="row"th:text ="${a.getId()}"</th>
+                        <td th:text ="${a.getUser().getId()}"</td>
+                        <td th:text ="${a.getUser().getName()}"</td>
+                        <td th:text ="${a.getUser().getEmail()}"</td>
+                        <td th:text ="${a.getAmount()}"</td>
+                        <td th:text ="${a.getRejectiondate()}"</td>
                     </tr>
                 </th:block>
                 </tbody>

@@ -16,13 +16,13 @@ public class Alert implements Serializable {
     private int amount;
     private LocalDate rejectiondate;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn (name = "userID", referencedColumnName="id")
     private User user;
 
     public int getId() {
         return id;
     }
-
 
     public int getAmount() {
         return amount;
