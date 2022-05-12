@@ -11,12 +11,12 @@ public class MV3 {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
 
-    private Long optionalID;
+    private int optionalID;
     private int amount;
 
-    public Long getOptionalID() {
+    public int getOptionalID() {
         return optionalID;
     }
 

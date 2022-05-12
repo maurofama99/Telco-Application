@@ -14,7 +14,7 @@ public class CustomerOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private LocalDate date;
     private LocalDate startDate;
     private boolean orderStatus; // 0 -> invalid, 1 -> valid
@@ -38,7 +38,7 @@ public class CustomerOrder implements Serializable {
     private List<OptionalProduct> optionalProducts;
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

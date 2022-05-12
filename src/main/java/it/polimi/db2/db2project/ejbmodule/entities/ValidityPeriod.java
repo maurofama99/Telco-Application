@@ -12,7 +12,7 @@ public class ValidityPeriod implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private int duration;
 
     @ManyToOne
@@ -40,7 +40,7 @@ public class ValidityPeriod implements Serializable {
         return price;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

@@ -118,14 +118,14 @@ public class EmployeePage extends HttpServlet {
             List<OptionalProduct> optionals = new ArrayList<OptionalProduct>();
             // caso in cui nessun optional è stato aggiunto alla sessione, devo prendere tutti gli optional corrispondenti agli id dal database e metterli nella sessione
             for (String id: checkedoptionalsids) {
-                optionals.add(optionalService.findOptionalByID(Long.parseLong(id)));
+                optionals.add(optionalService.findOptionalByID(Integer.parseInt(id)));
             }
             session.setAttribute("optionals", optionals);
         } else {
             List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
             for (String id: checkedoptionalsids) {
-                if (optionals.stream().noneMatch(o -> o.getId().equals(Long.parseLong(id)))){
-                    optionals.add(optionalService.findOptionalByID(Long.parseLong(id)));
+                if (optionals.stream().noneMatch(o -> o.getId() == (Integer.parseInt(id)))){
+                    optionals.add(optionalService.findOptionalByID(Integer.parseInt(id)));
                 }
             }
             session.setAttribute("optionals", optionals);

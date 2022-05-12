@@ -40,7 +40,7 @@ public class CustomerService {
     }
 
     //da controllare che abbia senso sta cosa
-    public void updateStatus(Long Id){
+    public void updateStatus(int Id){
         CustomerOrder customerOrder = em.find(CustomerOrder.class, Id);
 
         customerOrder.setOrderStatus(true);

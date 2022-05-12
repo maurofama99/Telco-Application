@@ -18,7 +18,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String name;
     private String email;
     private String password;
@@ -29,7 +29,7 @@ public class User implements Serializable {
 
     // per adesso non stiamo mettendo alert, quindi da user non possiamo arrivare ad alert
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

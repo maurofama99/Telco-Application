@@ -39,7 +39,7 @@ public class SalesReportService {
 
     // The average number of optional products sold together with each service package.
     public double optionalsAvg(){
-        List<Long> optperpkg = em.createNamedQuery("mv2.opperpackage", Long.class).getResultList();
+        List<Integer> optperpkg = em.createNamedQuery("mv2.opperpackage", Integer.class).getResultList();
         return optperpkg.stream()
                 .mapToDouble(d -> d)
                 .average()

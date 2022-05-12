@@ -11,7 +11,7 @@ public class Service implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn (name = "packageID",  referencedColumnName="ID")
@@ -51,7 +51,7 @@ public class Service implements Serializable {
         ExtraGigaFee = extraGigaFee;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

@@ -16,7 +16,7 @@ public class OptionalService {
     @PersistenceContext(unitName = "TelcoApplicationEJB")
     private EntityManager em;
 
-    public OptionalProduct findOptionalByID(Long id){
+    public OptionalProduct findOptionalByID(int id){
         return em.find(OptionalProduct.class, id);
     }
 

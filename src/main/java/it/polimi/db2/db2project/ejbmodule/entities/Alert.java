@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class Alert implements Serializable {
 
     @Id
-    private Long id;
+    private int id;
 
 
     private int amount;
@@ -19,7 +19,7 @@ public class Alert implements Serializable {
     @OneToOne
     private User user;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

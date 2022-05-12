@@ -13,7 +13,7 @@ public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Long id;
+    private int id;
 
     private String name;
     private int fee;
@@ -33,7 +33,7 @@ public class OptionalProduct implements Serializable {
         this.fee = fee;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

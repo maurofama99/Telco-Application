@@ -69,7 +69,7 @@ public class SalesReport extends HttpServlet {
             totValueNoop = salesReportService.totValueNoop();
             optionalsAvg = salesReportService.optionalsAvg();
             bestSeller = salesReportService.bestSellerOp();
-            op = optionalService.findOptionalByID((Long) bestSeller[0]);
+            op = optionalService.findOptionalByID((Integer) bestSeller[0]);
             insolventUsers = userService.insolventUsers();
             suspendedOrders = customerService.suspendedOrders();
             alerts = salesReportService.alerts();

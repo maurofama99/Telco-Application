@@ -14,7 +14,7 @@ public class TelcoPackage implements Serializable {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String name;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "telcoPackage")
@@ -31,7 +31,7 @@ public class TelcoPackage implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "telcoPackage", cascade = CascadeType.ALL)
     private List<Service> services;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
