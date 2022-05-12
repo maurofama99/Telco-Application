@@ -59,7 +59,7 @@ public class Payment extends  HttpServlet{
             CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
             customerService.updateStatus(customerOrder.getId());
             session.setAttribute("status", true);
-
+            session.setAttribute("failing", false);
         }else{
             User user = (User) session.getAttribute("user");
             TelcoPackage telcoPackage = (TelcoPackage) session.getAttribute("telcopackage");
