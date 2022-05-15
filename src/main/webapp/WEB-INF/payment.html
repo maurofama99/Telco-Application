@@ -7,11 +7,13 @@
 <body>
 <div>
     <div th:if="${session.status}">
-        <h1>BOMBA HAI ACQUISTATO IL PACCHETO</h1>
+        <h2>The payment has been successful.  </h2>
+        <h3 th:text="${'The service will start on ' + session.startDate}"</h3>
     </div>
     <!-- ELSE -->
     <div th:unless="${session.status}">
-        <h1>CHE SFIGA TI E' SALTATO IL PAGAMENTO</h1>
+        <h2>Something went wrong with the payment</h2>
+        <h3>Go to the failed orders page and retry the payment</h3>
     </div>
 </div>
 <form action="/db2_project_war_exploded/home" method="POST">
