@@ -76,7 +76,7 @@ public class Register extends HttpServlet {
             usrService.registerUser(usrn, pwd, mail);
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-            ctx.setVariable("msg", "SEI REGISTRATO GODDAAAM");
+            ctx.setVariable("msg", "You're now registered");
             path = "/index.html";
             templateEngine.process(path, ctx, response.getWriter());
         }

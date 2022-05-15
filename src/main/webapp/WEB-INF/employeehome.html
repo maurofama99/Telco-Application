@@ -8,6 +8,11 @@
 <div style="text-align:right;">
     <p th:text="${'user: ' + session.empname}"></p>
 </div>
+<div style="text-align:right;">
+    <form action="/db2_project_war_exploded/salesreport" method="POST">
+        <input type="submit" value="Sales Report"  style="height:50px; width:200px" />
+    </form>
+</div>
 
 <h2>Create a service:</h2>
 
@@ -97,12 +102,6 @@
     <input type="hidden" name="action" value="createpackage">
     <input type="submit" value="Create Package"  style="height:50px; width:200px" />
     <p th:text=" ${errorMSG}"></p>
-</form>
-</div>
-
-<div style="text-align:center;">
-<form action="/db2_project_war_exploded/salesreport" method="POST">
-    <input type="submit" value="Sales Report"  style="height:50px; width:200px" />
 </form>
 </div>
 
