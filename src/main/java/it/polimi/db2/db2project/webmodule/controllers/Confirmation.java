@@ -65,7 +65,6 @@ public class Confirmation extends HttpServlet{
                 failedOrderID = Integer.parseInt(request.getParameter("failedorderID"));
                 CustomerOrder customerOrder = customerService.findOrderbyID(failedOrderID);
                 session.setAttribute("customerOrder", customerOrder);
-                //session.setAttribute("confirmation", true);
                 session.setAttribute("failing", true);
 
                 ValidityPeriod validityPeriod = customerOrder.getValidityPeriod();
@@ -134,8 +133,13 @@ public class Confirmation extends HttpServlet{
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = getServletContext().getContextPath() + "/home";
-        resp.sendRedirect(path);
+        String path;
+        if(req.getSession().getAttribute("confirmation")!= null && req.getSession().getAttribute("confirmation").equals(true))
+            doPost(req, resp);
+        else{
+            path = getServletContext().getContextPath() + "/home";
+            resp.sendRedirect(path);
+        }
     }
 
     public void destroy() {
