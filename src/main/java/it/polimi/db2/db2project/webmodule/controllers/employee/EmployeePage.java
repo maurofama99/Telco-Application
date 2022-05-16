@@ -114,14 +114,15 @@ public class EmployeePage extends HttpServlet {
     private void doPostAddExistingOptionals(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String[] checkedoptionalsids = request.getParameterValues("checkedexistingoptionals"); // qui ho messo in checkedoptionalsids tutti gli id degli optionals esistenti selezionati
-        if (session.getAttribute("optionals") == null) {
+
+        if (session.getAttribute("optionals") == null && checkedoptionalsids != null) {
             List<OptionalProduct> optionals = new ArrayList<OptionalProduct>();
             // caso in cui nessun optional è stato aggiunto alla sessione, devo prendere tutti gli optional corrispondenti agli id dal database e metterli nella sessione
             for (String id: checkedoptionalsids) {
                 optionals.add(optionalService.findOptionalByID(Integer.parseInt(id)));
             }
             session.setAttribute("optionals", optionals);
-        } else {
+        } else if (checkedoptionalsids != null){
             List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute("optionals");
             for (String id: checkedoptionalsids) {
                 if (optionals.stream().noneMatch(o -> o.getId() == (Integer.parseInt(id)))){

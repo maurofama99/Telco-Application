@@ -53,7 +53,7 @@ public class SalesReport extends HttpServlet {
         List<Object[]> totValueOp = new ArrayList<>();
         List<Object[]> totValueNoop = new ArrayList<>();
         Double optionalsAvg;
-        Object[] bestSeller;
+        List<Object[]> bestSeller;
         OptionalProduct op;
         List<User> insolventUsers = new ArrayList<>();
         List<CustomerOrder> suspendedOrders = new ArrayList<>();
@@ -69,7 +69,7 @@ public class SalesReport extends HttpServlet {
             totValueNoop = salesReportService.totValueNoop();
             optionalsAvg = salesReportService.optionalsAvg();
             bestSeller = salesReportService.bestSellerOp();
-            op = optionalService.findOptionalByID((Integer) bestSeller[0]);
+            op = optionalService.findOptionalByID((Integer) bestSeller.get(0)[0]);
             insolventUsers = userService.insolventUsers();
             suspendedOrders = customerService.suspendedOrders();
             alerts = salesReportService.alerts();
