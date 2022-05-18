@@ -9,241 +9,247 @@
 <body>
 <h1>Sales Report</h1>
 <div class="accordion" id="accordionExample">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                    Number of Total Purchase per Package
-                </button>
-            </h5>
-        </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Number of Purchase</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="o : ${session.totPurchPckg}">
+    <div th:if="{session.totPurchPkg.size() != 0}">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Number of Total Purchase per Package
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row"th:text ="${o[0]}"</th>
-                        <td th:text ="${o[1]}"</td>
-                        <td th:text ="${o[2]}"</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Number of Purchase</th>
                     </tr>
-                </th:block>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="o : ${session.totPurchPckg}">
+                        <tr>
+                            <th scope="row"th:text ="${o[0]}"</th>
+                            <td th:text ="${o[1]}"</td>
+                            <td th:text ="${o[2]}"</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Number of Total Purchase per Package and Validity Period
-                </button>
-            </h5>
-        </div>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Validity Period</th>
-                    <th scope="col">Number of Purchase</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="o : ${session.totPurchPckgVp}">
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Number of Total Purchase per Package and Validity Period
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row"th:text ="${o[0]}"</th>
-                        <td th:text ="${o[1]}"</td>
-                        <td th:text ="${o[2]}"</td>
-                        <td th:text ="${o[3]}"</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Validity Period</th>
+                        <th scope="col">Number of Purchase</th>
                     </tr>
-                </th:block>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="o : ${session.totPurchPckgVp}">
+                        <tr>
+                            <th scope="row"th:text ="${o[0]}"</th>
+                            <td th:text ="${o[1]}"</td>
+                            <td th:text ="${o[2]}"</td>
+                            <td th:text ="${o[3]}"</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingThree">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Total value of sales per package with the optional products
-                </button>
-            </h5>
-        </div>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Value of Sales</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="o : ${session.totValueOp}">
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Total value of sales per package with the optional products
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row"th:text ="${o[0]}"</th>
-                        <td th:text ="${o[1]}"</td>
-                        <td th:text ="${o[2]}"</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Value of Sales</th>
                     </tr>
-                </th:block>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="o : ${session.totValueOp}">
+                        <tr>
+                            <th scope="row"th:text ="${o[0]}"</th>
+                            <td th:text ="${o[1]}"</td>
+                            <td th:text ="${o[2]}"</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingFour">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    Total value of sales per package without the optional products
-                </button>
-            </h5>
-        </div>
-        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Value of Sales</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="o : ${session.totValueNoop}">
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Total value of sales per package without the optional products
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row"th:text ="${o[0]}"</th>
-                        <td th:text ="${o[1]}"</td>
-                        <td th:text ="${o[2]}"</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Value of Sales</th>
                     </tr>
-                </th:block>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="o : ${session.totValueNoop}">
+                        <tr>
+                            <th scope="row"th:text ="${o[0]}"</th>
+                            <td th:text ="${o[1]}"</td>
+                            <td th:text ="${o[2]}"</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingFive">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Average number of optional products sold together with each service package
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                <h3 th:text="${session.optionalsAvg}"></h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingSix">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        Best seller optional product
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                <h5 th:text="${session.optionale.getName()}"></h5>
+            </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header" id="headingFive">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                    Average number of optional products sold together with each service package
-                </button>
-            </h5>
-        </div>
-        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
-            <h3 th:text="${session.optionalsAvg}"></h3>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingSix">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                    Best seller optional product
-                </button>
-            </h5>
-        </div>
-        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
-            <h5 th:text="${session.optionale.getName()}"></h5>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingSeven">
-            <h5 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                    List of insolvent users
-                </button>
-            </h5>
-        </div>
-        <div id="collapseSeven" class="collapse show" aria-labelledby="headingSeven" data-parent="#accordionExample">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="u : ${session.insolvent}">
+    <div th:if="{session.insolvent.size() != 0}">
+        <div class="card">
+            <div class="card-header" id="headingSeven">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        List of insolvent users
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSeven" class="collapse show" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row"th:text ="${u.getId()}"</th>
-                        <td th:text ="${u.getName()}"</td>
-                        <td th:text ="${u.getEmail()}"</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
                     </tr>
-                </th:block>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="u : ${session.insolvent}">
+                        <tr>
+                            <th scope="row"th:text ="${u.getId()}"</th>
+                            <td th:text ="${u.getName()}"</td>
+                            <td th:text ="${u.getEmail()}"</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingEight">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        List of Suspended Orders
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">UserID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="o : ${session.suspended}">
+                        <tr>
+                            <th scope="row"th:text ="${o.getId()}"</th>
+                            <td th:text ="${o.getUser().getId()}"</td>
+                            <td th:text ="${o.getDate()}"</td>
+                            <td th:text ="${o.getAmount()}"</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header" id="headingEight">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                    List of Suspended Orders
-                </button>
-            </h5>
-        </div>
-        <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">UserID</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Amount</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="o : ${session.suspended}">
+    <div th:if="{session.alerts.size() != 0}">
+        <div class="card">
+            <div class="card-header" id="headingNine">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                        Alerts
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row"th:text ="${o.getId()}"</th>
-                        <td th:text ="${o.getUser().getId()}"</td>
-                        <td th:text ="${o.getDate()}"</td>
-                        <td th:text ="${o.getAmount()}"</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">User ID</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">User Email</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">RejectionDate</th>
                     </tr>
-                </th:block>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingNine">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                    Alerts
-                </button>
-            </h5>
-        </div>
-        <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">User ID</th>
-                    <th scope="col">User Name</th>
-                    <th scope="col">User Email</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">RejectionDate</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="a : ${session.alerts}">
-                    <tr>
-                        <th scope="row"th:text ="${a.getId()}"</th>
-                        <td th:text ="${a.getUser().getId()}"</td>
-                        <td th:text ="${a.getUser().getName()}"</td>
-                        <td th:text ="${a.getUser().getEmail()}"</td>
-                        <td th:text ="${a.getAmount()}"</td>
-                        <td th:text ="${a.getRejectiondate()}"</td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="a : ${session.alerts}">
+                        <tr>
+                            <th scope="row"th:text ="${a.getId()}"</th>
+                            <td th:text ="${a.getUser().getId()}"</td>
+                            <td th:text ="${a.getUser().getName()}"</td>
+                            <td th:text ="${a.getUser().getEmail()}"</td>
+                            <td th:text ="${a.getAmount()}"</td>
+                            <td th:text ="${a.getRejectiondate()}"</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
