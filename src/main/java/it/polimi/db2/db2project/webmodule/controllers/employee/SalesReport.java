@@ -54,7 +54,7 @@ public class SalesReport extends HttpServlet {
         List<Object[]> totValueNoop = new ArrayList<>();
         Double optionalsAvg;
         List<Object[]> bestSeller;
-        OptionalProduct op;
+        OptionalProduct op = null;
         List<User> insolventUsers = new ArrayList<>();
         List<CustomerOrder> suspendedOrders = new ArrayList<>();
         List<Alert> alerts = new ArrayList<>();
@@ -63,26 +63,37 @@ public class SalesReport extends HttpServlet {
         } else {
             Employee user = (Employee) session.getAttribute("emp");
             session.setAttribute("empname", user.getName());
+
             totPurchPckg = salesReportService.totPurchPckg();
             totPurchPckgVp = salesReportService.totPurchPckgVp();
             totValueOp = salesReportService.totValueOp();
             totValueNoop = salesReportService.totValueNoop();
             optionalsAvg = salesReportService.optionalsAvg();
             bestSeller = salesReportService.bestSellerOp();
-            op = optionalService.findOptionalByID((Integer) bestSeller.get(0)[0]);
+            if (!bestSeller.isEmpty()) {
+                op = optionalService.findOptionalByID((Integer) bestSeller.get(0)[0]);
+            }
             insolventUsers = userService.insolventUsers();
             suspendedOrders = customerService.suspendedOrders();
             alerts = salesReportService.alerts();
-            session.setAttribute("totPurchPckg", totPurchPckg);
+
+            if (totPurchPckg.isEmpty()){
+                session.setAttribute("totPurchPckg", null);
+            } else session.setAttribute("totPurchPckg", totPurchPckg);
             session.setAttribute("totPurchPckgVp", totPurchPckgVp);
             session.setAttribute("totValueOp", totValueOp);
             session.setAttribute("totValueNoop", totValueNoop);
             session.setAttribute("optionalsAvg", optionalsAvg);
             session.setAttribute("bestSeller", bestSeller);
             session.setAttribute("optionale", op);
-            session.setAttribute("insolvent", insolventUsers);
+            if (insolventUsers.isEmpty()){
+                session.setAttribute("insolvent", null);
+            } else session.setAttribute("insolvent", insolventUsers);
             session.setAttribute("suspended", suspendedOrders);
-            session.setAttribute("alerts", alerts);
+            if (alerts.isEmpty()){
+                session.setAttribute("alerts", null);
+            } else session.setAttribute("alerts", alerts);
+
             templateEngine.process("/WEB-INF/salesreport.html", ctx, response.getWriter());
         }
     }
