@@ -7,7 +7,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "telcopackage", schema = "db2_project_schema")
-//@SecondaryTable(name="customerorder", pkJoinColumns=@PrimaryKeyJoinColumn(name="ID"))
 @NamedQuery(name = "TelcoPackage.getPackages", query = "SELECT r FROM TelcoPackage r")
 public class TelcoPackage implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -17,10 +16,6 @@ public class TelcoPackage implements Serializable {
     private int id;
     private String name;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "telcoPackage")
-//    private List<CustomerOrder> orders;
-
-    //@ManyToMany(fetch = FetchType.EAGER, mappedBy = "packages", cascade = CascadeType.MERGE)
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable (name = "packageoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "packageID"), inverseJoinColumns = @JoinColumn(name = "optionalID"))
     private List<OptionalProduct> optionalProducts;
@@ -52,10 +47,6 @@ public class TelcoPackage implements Serializable {
         return optionalProducts;
     }
 
-//    public void setOrders(List<CustomerOrder> orders) {
-//        this.orders = orders;
-//    }
-
     public void setOptionalProducts(List<OptionalProduct> optionalProducts) {
         this.optionalProducts = optionalProducts;
         for (OptionalProduct op: optionalProducts){
@@ -80,6 +71,5 @@ public class TelcoPackage implements Serializable {
     public List<ValidityPeriod> getValidityPeriods() {
         return validityPeriods;
     }
-
 
 }

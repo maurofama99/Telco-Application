@@ -53,6 +53,8 @@ public class SalesReportService {
         return (List<Object[]>) em.createNamedQuery("mv3.bestseller").getResultList();
     }
 
+
+    /* -----Alerts-----*/
     public List<Alert> alerts(){
         return  em.createNamedQuery("Alert.everybody").getResultList();
     }

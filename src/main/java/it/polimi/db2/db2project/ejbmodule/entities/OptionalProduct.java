@@ -21,8 +21,6 @@ public class OptionalProduct implements Serializable {
     @ManyToMany (mappedBy = "optionalProducts", fetch = FetchType.EAGER)
     private List<CustomerOrder> orders;
 
-    //@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    //@JoinTable (name = "packageoptionals", schema = "db2_project_schema", joinColumns = @JoinColumn(name = "optionalID"), inverseJoinColumns = @JoinColumn(name = "packageID"))
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "optionalProducts")
     private List<TelcoPackage> packages;
 

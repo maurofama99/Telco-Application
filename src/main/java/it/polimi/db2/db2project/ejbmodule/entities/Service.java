@@ -45,7 +45,6 @@ public class Service implements Serializable {
     }
 
     public Service(String type, int NGiga, int extraGigaFee) {
-        // todo check se la stringa è una tra "mobileinternet" e "fixedinternet"
         this.type = type;
         this.NGiga = NGiga;
         ExtraGigaFee = extraGigaFee;
