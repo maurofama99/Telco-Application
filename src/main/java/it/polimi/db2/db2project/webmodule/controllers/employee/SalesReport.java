@@ -52,7 +52,7 @@ public class SalesReport extends HttpServlet {
         List<Object[]> totPurchPckgVp = new ArrayList<>();
         List<Object[]> totValueOp = new ArrayList<>();
         List<Object[]> totValueNoop = new ArrayList<>();
-        double optionalsAvg;
+        List<Object[]> optionalsAvg;
         List<Object[]> bestSeller;
         OptionalProduct op = null;
         List<User> insolventUsers = new ArrayList<>();

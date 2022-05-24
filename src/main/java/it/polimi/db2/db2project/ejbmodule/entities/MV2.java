@@ -9,7 +9,7 @@ import javax.persistence.*;
 // The total value of sales per package without the optional products.
 @NamedQuery(name = "mv2.totvaluenoop", query = "SELECT mv.packageID, mv.packagename, sum(mv.noopamount) FROM MV2 mv GROUP BY mv.packageID, mv.packagename")
 // Number of optional product sold together with each service package.
-@NamedQuery(name = "mv2.opperpackage", query = "SELECT sum(mv.optionals) FROM MV2 mv GROUP BY mv.packageID")
+@NamedQuery(name = "mv2.opperpackage", query = "SELECT mv.packageID, mv.packagename, avg(mv.optionals) FROM MV2 mv GROUP BY mv.packageID, mv.packagename")
 public class MV2 {
 
     @Id
@@ -21,5 +21,6 @@ public class MV2 {
     private int optionals;
     private int amount;
     private int noopamount;
+    private int orderID;
 
 }
