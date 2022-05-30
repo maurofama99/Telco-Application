@@ -39,7 +39,7 @@ public class CustomerService {
         return customerOrder;
     }
 
-    //da controllare che abbia senso sta cosa
+
     public void updateStatus(int Id){
         CustomerOrder customerOrder = em.find(CustomerOrder.class, Id);
 
